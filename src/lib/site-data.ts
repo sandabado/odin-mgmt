@@ -10,3 +10,9 @@ export const services = [
   ["02", "Management", "A steady operating layer for artists making releases, rooms, and durable careers."],
   ["03", "Release strategy", "Campaign systems that connect the record, the live room, and the audience without flattening the artist."],
 ] as const;
+
+export const promotions = [
+  { artist: "Sandābādo", format: "Show poster", title: "∞ LOVE", detail: "Red Dog Saloon · 26 Sep", note: "Tour announcement system", tone: "violet" },
+  { artist: "Father Atlas", format: "Release world", title: "NORTHBOUND", detail: "A record in motion", note: "Release campaign kit", tone: "amber" },
+  { artist: "Palo Xanto", format: "Press dispatch", title: "FIELD / NOTE 04", detail: "Sound, place, memory", note: "Editorial & social sequence", tone: "jade" },
+] as const;
