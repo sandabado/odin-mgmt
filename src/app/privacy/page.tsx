@@ -1,0 +1,3 @@
+import Link from "next/link";
+
+export default function PrivacyPage() { return <main className="legal-page"><Link href="/" className="brand"><span className="brand-mark">O</span><span>Odin<br />Management</span></Link><p className="eyebrow">Privacy</p><h1>We protect the signal.</h1><p>Odin Management uses contact details only to respond to legitimate booking and management inquiries. We do not sell personal information or use it for unrelated marketing.</p><p>For questions or data requests, contact <a href="mailto:booking@odin.management">booking@odin.management</a>.</p><Link href="/" className="text-link">Return home <span aria-hidden="true">→</span></Link></main>; }
