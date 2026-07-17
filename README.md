@@ -19,12 +19,14 @@ The private venue database, lead scoring, outreach automation, contracts, and pa
 
 The Phase 1 foundation is in the repository, but it is not connected to a live Supabase project until an operator provides the environment values and applies the migration.
 
-1. Create a Supabase project and copy the project URL plus publishable key into `.env.local` using `.env.example` as the reference.
+1. Create a Supabase project and copy the project URL plus publishable key into `.env.local` using `.env.example` as the reference. Legacy projects can use `NEXT_PUBLIC_SUPABASE_ANON_KEY` instead.
 2. Run [`supabase/migrations/20260717140000_phase_one_foundation.sql`](supabase/migrations/20260717140000_phase_one_foundation.sql) in the Supabase SQL editor or through the Supabase CLI.
 3. Configure the Supabase Auth site URL and redirect URL for `/auth/callback`.
 4. Register and confirm the first account. The migration assigns that first profile `super_admin`; future accounts default to `artist` until an administrator changes the role.
 
-`/admin` and `/login` are protected by Supabase session middleware. No live CRM, email sender, contract workflow, storage uploader, or social publisher has been represented as operational before its real integration exists.
+`/admin`, `/login`, and each future operations route are protected by Supabase session middleware. Supabase clients are separated by context: browser (RLS), server (session/RLS), and a server-only service-role client for trusted work such as webhooks. Every future API handler uses the `ApiResponse<T>` envelope and a Zod validator from `src/lib/validators`.
+
+No live CRM, email sender, contract workflow, storage uploader, or social publisher has been represented as operational before its real integration exists.
 
 ## Local development
 

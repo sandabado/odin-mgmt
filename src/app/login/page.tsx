@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { createSupabaseBrowserClient } from "@/lib/supabase/client";
+import { createBrowserSupabaseClient } from "@/lib/supabase/browser";
 
 export default function LoginPage() {
   const [mode, setMode] = useState<"sign-in" | "register">("sign-in");
@@ -17,7 +17,7 @@ export default function LoginPage() {
     const password = String(formData.get("password") ?? "");
 
     try {
-      const supabase = createSupabaseBrowserClient();
+      const supabase = createBrowserSupabaseClient();
       const result = mode === "sign-in"
         ? await supabase.auth.signInWithPassword({ email, password })
         : await supabase.auth.signUp({ email, password, options: { emailRedirectTo: `${window.location.origin}/auth/callback` } });

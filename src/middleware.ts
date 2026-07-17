@@ -1,15 +1,36 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-const protectedPath = "/admin";
+const protectedRoutes = [
+  "/admin",
+  "/dashboard",
+  "/venues",
+  "/leads",
+  "/contracts",
+  "/promo-studio",
+  "/analytics",
+  "/settings",
+  "/partner-artists",
+  "/swap-board",
+] as const;
+
+const superAdminRoutes = ["/settings"] as const;
+const bookingRoutes = ["/venues", "/leads", "/contracts", "/partner-artists", "/swap-board"] as const;
+
+function matchesRoute(pathname: string, routes: readonly string[]) {
+  return routes.some((route) => pathname === route || pathname.startsWith(`${route}/`));
+}
 
 export async function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+  const isProtected = matchesRoute(pathname, protectedRoutes);
+  const isLogin = pathname === "/login";
   let response = NextResponse.next({ request });
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const publishableKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+  const publishableKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
   if (!url || !publishableKey) {
-    if (request.nextUrl.pathname.startsWith(protectedPath)) {
+    if (isProtected) {
       return NextResponse.redirect(new URL("/login?configuration=required", request.url));
     }
     return response;
@@ -29,12 +50,10 @@ export async function middleware(request: NextRequest) {
   });
 
   const { data: { user } } = await supabase.auth.getUser();
-  const isLogin = request.nextUrl.pathname === "/login";
-  const isProtected = request.nextUrl.pathname.startsWith(protectedPath);
 
   if (!user && isProtected) {
     const redirectUrl = new URL("/login", request.url);
-    redirectUrl.searchParams.set("next", request.nextUrl.pathname);
+    redirectUrl.searchParams.set("next", pathname);
     return NextResponse.redirect(redirectUrl);
   }
 
@@ -42,7 +61,34 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/admin", request.url));
   }
 
+  if (user && isProtected) {
+    const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).maybeSingle();
+    const role = profile?.role;
+
+    if (matchesRoute(pathname, superAdminRoutes) && role !== "super_admin") {
+      return NextResponse.redirect(new URL("/admin", request.url));
+    }
+
+    if (matchesRoute(pathname, bookingRoutes) && role === "artist") {
+      return NextResponse.redirect(new URL("/admin", request.url));
+    }
+  }
+
   return response;
 }
 
-export const config = { matcher: ["/admin/:path*", "/login"] };
+export const config = {
+  matcher: [
+    "/admin/:path*",
+    "/dashboard/:path*",
+    "/venues/:path*",
+    "/leads/:path*",
+    "/contracts/:path*",
+    "/promo-studio/:path*",
+    "/analytics/:path*",
+    "/settings/:path*",
+    "/partner-artists/:path*",
+    "/swap-board/:path*",
+    "/login",
+  ],
+};
