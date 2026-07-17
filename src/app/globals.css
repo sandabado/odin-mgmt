@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root { --ink:#111019; --paper:#f4f1ed; --muted:#706d78; --line:#d9d4dd; --violet:#6d4aff; --violet-soft:#edeaff; --night:#211a3e; --radius:18px; }
 * { box-sizing:border-box; }
 html { scroll-behavior:smooth; }

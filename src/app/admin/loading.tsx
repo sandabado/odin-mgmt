@@ -1,0 +1,1 @@
+export default function AdminLoading() { return <main className="min-h-screen bg-void p-8 text-bone"><div className="mx-auto max-w-7xl animate-pulse border border-mercury bg-carbon p-8"><p className="font-mono text-xs uppercase tracking-[.16em] text-plasma">Opening Odin operations…</p></div></main>; }
