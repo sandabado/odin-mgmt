@@ -17,7 +17,7 @@ const protectedRoutes = [
   "/deals",
 ] as const;
 
-const superAdminRoutes = ["/settings"] as const;
+const superAdminRoutes = ["/settings", "/admin/treasury"] as const;
 const bookingRoutes = [
   "/venues",
   "/leads",

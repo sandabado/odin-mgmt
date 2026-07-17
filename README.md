@@ -30,6 +30,10 @@ The industry Rolodex is the next protected module. After Phase 1 is running, app
 
 The contacts API is available at `/api/contacts` for authenticated operations staff. Email delivery, open/click tracking, and campaign sending intentionally remain off until SendGrid is connected and webhook signatures are configured.
 
+### Whole Body Studios Treasury
+
+[`supabase/migrations/20260717160000_studio_treasury_and_projects.sql`](supabase/migrations/20260717160000_studio_treasury_and_projects.sql) adds the cross-arm foundation: projects, a shared timeline, revenue ledger, payouts, and contact engagements. `/admin/treasury` is super-admin-only and reports from those real ledger entries using the Feed First split: artist 50%, guild 25%, infrastructure 15%, founder 10%.
+
 `/admin`, `/login`, and each future operations route are protected by Supabase session middleware. Supabase clients are separated by context: browser (RLS), server (session/RLS), and a server-only service-role client for trusted work such as webhooks. Every future API handler uses the `ApiResponse<T>` envelope and a Zod validator from `src/lib/validators`.
 
 No live CRM, email sender, contract workflow, storage uploader, or social publisher has been represented as operational before its real integration exists.
