@@ -12,10 +12,23 @@ const protectedRoutes = [
   "/settings",
   "/partner-artists",
   "/swap-board",
+  "/contacts",
+  "/outreach",
+  "/deals",
 ] as const;
 
 const superAdminRoutes = ["/settings"] as const;
-const bookingRoutes = ["/venues", "/leads", "/contracts", "/partner-artists", "/swap-board"] as const;
+const bookingRoutes = [
+  "/venues",
+  "/leads",
+  "/contracts",
+  "/partner-artists",
+  "/swap-board",
+  "/contacts",
+  "/outreach",
+  "/deals",
+  "/admin/contacts",
+] as const;
 
 function matchesRoute(pathname: string, routes: readonly string[]) {
   return routes.some((route) => pathname === route || pathname.startsWith(`${route}/`));
@@ -89,6 +102,9 @@ export const config = {
     "/settings/:path*",
     "/partner-artists/:path*",
     "/swap-board/:path*",
+    "/contacts/:path*",
+    "/outreach/:path*",
+    "/deals/:path*",
     "/login",
   ],
 };

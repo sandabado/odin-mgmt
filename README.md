@@ -24,6 +24,12 @@ The Phase 1 foundation is in the repository, but it is not connected to a live S
 3. Configure the Supabase Auth site URL and redirect URL for `/auth/callback`.
 4. Register and confirm the first account. The migration assigns that first profile `super_admin`; future accounts default to `artist` until an administrator changes the role.
 
+### Odin Network
+
+The industry Rolodex is the next protected module. After Phase 1 is running, apply [`supabase/migrations/20260717150000_industry_network_foundation.sql`](supabase/migrations/20260717150000_industry_network_foundation.sql). It adds contacts, outreach campaign/message records, deal history, RLS, and a warmth calculation that powers the contacts workspace at `/admin/contacts`.
+
+The contacts API is available at `/api/contacts` for authenticated operations staff. Email delivery, open/click tracking, and campaign sending intentionally remain off until SendGrid is connected and webhook signatures are configured.
+
 `/admin`, `/login`, and each future operations route are protected by Supabase session middleware. Supabase clients are separated by context: browser (RLS), server (session/RLS), and a server-only service-role client for trusted work such as webhooks. Every future API handler uses the `ApiResponse<T>` envelope and a Zod validator from `src/lib/validators`.
 
 No live CRM, email sender, contract workflow, storage uploader, or social publisher has been represented as operational before its real integration exists.
