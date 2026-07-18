@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, type ComponentType, type SVGProps } from "react";
 import {
-  Bell, BriefcaseBusiness, CalendarDays, ChevronRight, CircleDot, FileText, Landmark, LogOut, MapPin, Menu, Music2, Newspaper, Repeat2, Search, Settings, Sparkles, UserRound, Users, UsersRound, WalletCards, X,
+  Bell, BookOpen, BriefcaseBusiness, CalendarDays, ChevronRight, CircleDot, FileText, Landmark, LogOut, MapPin, Menu, Music2, Newspaper, Repeat2, Search, Settings, Sparkles, UserRound, Users, UsersRound, WalletCards, X,
 } from "lucide-react";
 import { createBrowserSupabaseClient } from "@/lib/supabase/browser";
 
@@ -37,6 +37,7 @@ const navigation: NavSection[] = [
     { label: "Press", icon: Newspaper, status: "Next" },
   ] },
   { label: "System", items: [
+    { label: "Playbook", icon: BookOpen, href: "/admin/playbook" },
     { label: "Calendar", icon: CalendarDays, status: "Next" },
     { label: "Settings", icon: Settings, status: "Next" },
   ] },
