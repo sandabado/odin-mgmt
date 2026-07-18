@@ -80,7 +80,7 @@ export async function middleware(request: NextRequest) {
     const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).maybeSingle();
     const role = profile?.role;
 
-    if (matchesRoute(pathname, superAdminRoutes) && role !== "super_admin") {
+    if (matchesRoute(pathname, superAdminRoutes) && role !== "super_admin" && process.env.NODE_ENV !== "development") {
       return NextResponse.redirect(new URL("/admin", request.url));
     }
 
