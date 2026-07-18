@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
@@ -87,5 +88,5 @@ function SectionTitle({ eyebrow, title, detail }: { eyebrow: string; title: stri
 }
 
 export function OperationsDashboard({ user, liveItems, countdown, cards, arms, activity, quickLinks, generatedAt }: OperationsDashboardProps) {
-  return <main className="min-h-screen bg-void px-5 py-8 text-bone sm:px-8"><LoginSplash userId={user.id} /><div className="mx-auto grid max-w-7xl gap-8"><DashboardGreeting fullName={user.fullName} lastLogin={user.lastLogin} role={user.role} /><LiveNow generatedAt={generatedAt} items={liveItems} /><CountdownClock countdown={countdown} /><MorningCards cards={cards} /><ArmStatus arms={arms} /><ActivityFeed activity={activity} /><QuickAccess links={quickLinks} /></div></main>;
+  return <main className="relative isolate min-h-screen overflow-hidden bg-void px-5 py-8 text-bone sm:px-8"><div aria-hidden="true" className="pointer-events-none fixed right-[-8rem] top-28 z-0 w-72 opacity-[.13] sm:right-[-4rem] sm:w-96 lg:right-8 lg:w-[30rem]"><Image alt="" className="dashboard-orbit-object h-auto w-full" height={640} sizes="(min-width: 1024px) 480px, 384px" src="/images/odin-orbit-object.png" width={640} /></div><LoginSplash userId={user.id} /><div className="relative z-10 mx-auto grid max-w-7xl gap-8"><DashboardGreeting fullName={user.fullName} lastLogin={user.lastLogin} role={user.role} /><LiveNow generatedAt={generatedAt} items={liveItems} /><CountdownClock countdown={countdown} /><MorningCards cards={cards} /><ArmStatus arms={arms} /><ActivityFeed activity={activity} /><QuickAccess links={quickLinks} /></div></main>;
 }
