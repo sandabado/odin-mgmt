@@ -5,12 +5,12 @@ import { hasSupabaseEnvironment } from "@/lib/supabase/env";
 /** Use this at the top of every operations API route before accessing data. */
 export async function getOperationsSupabase() {
   if (!hasSupabaseEnvironment()) {
-    return { response: fail("SERVER_ERROR", "Odin operations is not configured yet.") } as const;
+    return { response: fail("SERVER_ERROR", "Ødin operations is not configured yet.") } as const;
   }
 
   const supabase = await createSupabaseServerClient();
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return { response: fail("UNAUTHORIZED", "Sign in to access Odin operations.") } as const;
+  if (!user) return { response: fail("UNAUTHORIZED", "Sign in to access Ødin operations.") } as const;
 
   const { data: profile, error } = await supabase.from("profiles").select("role").eq("id", user.id).maybeSingle();
   if (error || !profile || (profile.role !== "super_admin" && profile.role !== "booking_director")) {

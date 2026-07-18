@@ -15,5 +15,18 @@ export default async function AdminPage() {
   if (!user) redirect("/login");
   const { data: profile } = await supabase.from("profiles").select("full_name, role").eq("id", user.id).maybeSingle();
 
-  return <main className="min-h-screen bg-void p-5 text-bone sm:p-8"><div className="mx-auto max-w-7xl"><header className="flex flex-wrap items-start justify-between gap-5 border-b border-mercury pb-6"><div><p className="font-mono text-[10px] uppercase tracking-[.18em] text-plasma">Odin Management / private operations</p><h1 className="mt-3 font-display text-4xl leading-none">Good to see you, {profile?.full_name || user.email}.</h1></div><div className="border border-flux px-3 py-2 font-mono text-[10px] uppercase tracking-[.12em] text-flux">{profile?.role || "profile pending"}</div></header><div className="mt-7"><StudioHub /></div></div></main>;
+  const [venues, contacts, activeDeals, activeProjects] = await Promise.all([
+    supabase.from("venues").select("id", { count: "exact", head: true }),
+    supabase.from("contacts").select("id", { count: "exact", head: true }),
+    supabase.from("deals").select("id", { count: "exact", head: true }).eq("stage", "negotiating"),
+    supabase.from("projects").select("id", { count: "exact", head: true }).eq("status", "in_progress"),
+  ]);
+  const pulse = [
+    ["Active deals", activeDeals.count ?? 0, "Negotiating in the field"],
+    ["Live projects", activeProjects.count ?? 0, "Release work in motion"],
+    ["Venues", venues.count ?? 0, "Rooms held in the network"],
+    ["Contacts", contacts.count ?? 0, "Relationships in memory"],
+  ];
+
+  return <main className="min-h-screen bg-void p-5 text-bone sm:p-8"><div className="mx-auto max-w-7xl"><header className="flex flex-wrap items-start justify-between gap-5 border-b border-mercury pb-6"><div><p className="font-mono text-[10px] uppercase tracking-[.18em] text-plasma">Odin Management / private operations</p><h1 className="mt-3 font-display text-4xl leading-none">Good to see you, {profile?.full_name || user.email}.</h1></div><div className="border border-flux px-3 py-2 font-mono text-[10px] uppercase tracking-[.12em] text-flux">{profile?.role || "profile pending"}</div></header><section className="mt-5 grid gap-px border border-mercury bg-mercury sm:grid-cols-2 xl:grid-cols-4">{pulse.map(([label, value, detail]) => <article className="bg-carbon p-4" key={label}><p className="font-mono text-[9px] uppercase tracking-[.14em] text-ghost">{label}</p><p className="mt-3 font-display text-4xl leading-none text-flux">{value}</p><p className="mt-2 text-[10px] leading-4 text-ghost">{detail}</p></article>)}</section><div className="mt-7"><StudioHub /></div></div></main>;
 }
