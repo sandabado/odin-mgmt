@@ -15,6 +15,11 @@ export function OdinOrbitMark({ className, decorative = false, label = "ØDIN or
       viewBox="0 0 100 100"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <g className="odin-orbit-mark__signal" aria-hidden="true">
+        <circle className="odin-orbit-mark__signal-ring odin-orbit-mark__signal-ring--one" cx="50" cy="50" r="17.75" />
+        <circle className="odin-orbit-mark__signal-ring odin-orbit-mark__signal-ring--two" cx="50" cy="50" r="17.75" />
+        <circle className="odin-orbit-mark__signal-ring odin-orbit-mark__signal-ring--three" cx="50" cy="50" r="17.75" />
+      </g>
       <circle className="odin-orbit-mark__ring" cx="50" cy="50" r="42" />
       <g className="odin-orbit-mark__glyph" aria-hidden="true">
         <circle className="odin-orbit-mark__glyph-ring" cx="50" cy="50" r="17.75" />

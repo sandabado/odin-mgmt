@@ -1,5 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { isStaleAuthSession, isSupabaseSessionCookie } from "@/lib/auth/stale-session";
 
 const protectedRoutes = [
   "/admin",
@@ -42,6 +43,13 @@ function safeDestination(next: string | null) {
   return "/admin";
 }
 
+function clearStaleSession(request: NextRequest, response: NextResponse) {
+  request.cookies.getAll()
+    .filter(({ name }) => isSupabaseSessionCookie(name))
+    .forEach(({ name }) => response.cookies.set(name, "", { maxAge: 0, path: "/" }));
+  return response;
+}
+
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const isProtected = matchesRoute(pathname, protectedRoutes);
@@ -70,7 +78,16 @@ export async function middleware(request: NextRequest) {
     },
   });
 
-  const { data: { user } } = await supabase.auth.getUser();
+  const { data: { user }, error: authError } = await supabase.auth.getUser();
+
+  if (isStaleAuthSession(authError)) {
+    if (isProtected) {
+      const redirectUrl = new URL("/login", request.url);
+      redirectUrl.searchParams.set("next", pathname);
+      return clearStaleSession(request, NextResponse.redirect(redirectUrl));
+    }
+    return clearStaleSession(request, response);
+  }
 
   if (!user && isProtected) {
     const redirectUrl = new URL("/login", request.url);

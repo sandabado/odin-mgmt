@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { ArrowUpRight, BriefcaseBusiness, CalendarDays, Disc3, Flame, FolderKanban, Landmark, MailOpen, Megaphone, Radio, Repeat2, UsersRound, WalletCards } from "lucide-react";
 import { LoginSplash } from "@/components/admin/LoginSplash";
-import { OdinMark } from "@/components/OdinMark";
+import { OdinOrbitMark } from "@/components/OdinOrbitMark";
 
 export type DashboardLiveItem = { id: string; tone: "live" | "attention" | "critical" | "positive"; label: string; title: string; detail: string; href: string; action: string };
 export type DashboardCard = { id: string; label: string; value: string; detail: string; status: string; tone: "good" | "attention" | "urgent" | "quiet"; href: string; icon: "leads" | "replies" | "upcoming" | "cash" | "swaps" | "campaigns" | "deals" | "treasury" };
@@ -88,5 +88,5 @@ function SectionTitle({ eyebrow, title, detail }: { eyebrow: string; title: stri
 }
 
 export function OperationsDashboard({ user, liveItems, countdown, cards, arms, activity, quickLinks, generatedAt }: OperationsDashboardProps) {
-  return <main className="relative isolate min-h-screen overflow-hidden bg-void px-5 py-8 text-bone sm:px-8"><div aria-hidden="true" className="pointer-events-none fixed right-[-8rem] top-28 z-0 w-72 opacity-[.055] blur-[1px] sm:right-[-4rem] sm:w-96 lg:right-8 lg:w-[30rem]"><OdinMark alt="" className="dashboard-orbit-object h-auto w-full" variant="orbit" /></div><LoginSplash userId={user.id} /><div className="relative z-10 mx-auto grid max-w-7xl gap-8"><DashboardGreeting fullName={user.fullName} lastLogin={user.lastLogin} role={user.role} /><LiveNow generatedAt={generatedAt} items={liveItems} /><CountdownClock countdown={countdown} /><MorningCards cards={cards} /><ArmStatus arms={arms} /><ActivityFeed activity={activity} /><QuickAccess links={quickLinks} /></div></main>;
+  return <main className="relative isolate min-h-screen overflow-hidden bg-void px-5 py-8 text-bone sm:px-8"><div aria-hidden="true" className="pointer-events-none fixed right-[-8rem] top-28 z-0 w-72 opacity-[.08] blur-[1px] sm:right-[-4rem] sm:w-96 lg:right-8 lg:w-[30rem]"><OdinOrbitMark className="admin-orbit-mark dashboard-orbit-object h-auto w-full text-plasma" decorative /></div><LoginSplash userId={user.id} /><div className="relative z-10 mx-auto grid max-w-7xl gap-8"><DashboardGreeting fullName={user.fullName} lastLogin={user.lastLogin} role={user.role} /><LiveNow generatedAt={generatedAt} items={liveItems} /><CountdownClock countdown={countdown} /><MorningCards cards={cards} /><ArmStatus arms={arms} /><ActivityFeed activity={activity} /><QuickAccess links={quickLinks} /></div></main>;
 }
