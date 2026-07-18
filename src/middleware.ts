@@ -18,7 +18,7 @@ const protectedRoutes = [
   "/deals",
 ] as const;
 
-const superAdminRoutes = ["/settings", "/admin/treasury"] as const;
+const superAdminRoutes = ["/settings", "/admin/settings"] as const;
 const bookingRoutes = [
   "/venues",
   "/leads",
@@ -88,13 +88,10 @@ export async function middleware(request: NextRequest) {
     const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).maybeSingle();
     const role = profile?.role;
 
-    if (matchesRoute(pathname, superAdminRoutes) && role !== "super_admin" && process.env.NODE_ENV !== "development") {
-      return NextResponse.redirect(new URL("/admin", request.url));
-    }
-
-    if (matchesRoute(pathname, bookingRoutes) && role === "artist") {
-      return NextResponse.redirect(new URL("/admin", request.url));
-    }
+    if (role === "artist" && pathname.startsWith("/admin")) return NextResponse.redirect(new URL("/artist/dashboard", request.url));
+    if (matchesRoute(pathname, superAdminRoutes) && role !== "super_admin") return NextResponse.redirect(new URL("/admin/dashboard", request.url));
+    if (role === "booking_director" && matchesRoute(pathname, ["/admin/expenses"])) return NextResponse.redirect(new URL("/admin/money", request.url));
+    if (matchesRoute(pathname, bookingRoutes) && role === "artist") return NextResponse.redirect(new URL("/artist/dashboard", request.url));
   }
 
   return response;

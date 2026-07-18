@@ -1,60 +1,20 @@
 import { redirect } from "next/navigation";
 import { TreasuryQuincunx } from "@/components/admin/TreasuryQuincunx";
 import { formatUsd, summarizeRevenue, type StudioArm } from "@/lib/treasury/feed-first";
-import { hasSupabaseEnvironment } from "@/lib/supabase/env";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
-
-type RevenueRow = { project_id: string | null; arm: StudioArm; amount_cents: number; revenue_type: string };
-type ProjectRow = { id: string; project_code: string; title: string; investment_cents: number; status: string };
-type PayoutRow = { amount_cents: number; due_on: string | null };
-
-function startOfCurrentMonth() {
-  const now = new Date();
-  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-01`;
-}
+type Revenue = { project_id: string | null; arm: StudioArm; amount_cents: number; revenue_type: string };
+type Project = { id: string; project_code: string; title: string; investment_cents: number; status: string };
+type Payout = { amount_cents: number };
+const monthStart = () => { const now = new Date(); return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-01`; };
 
 export default async function TreasuryPage() {
-  if (!hasSupabaseEnvironment()) {
-    return <main className="min-h-screen bg-void p-6 text-bone sm:p-10"><section className="mx-auto max-w-3xl border border-mercury bg-carbon p-7 sm:p-10"><p className="font-mono text-[10px] uppercase tracking-[.18em] text-plasma">Whole Body Studios / treasury configuration</p><h1 className="mt-5 font-display text-5xl leading-none">The center is waiting.</h1><p className="mt-6 max-w-xl text-sm leading-6 text-ghost">Connect Supabase, then apply the Studio Treasury migration after the existing Phase 1 and Network migrations. The Quinconx will report only real ledger entries—never invented revenue.</p></section></main>;
-  }
-
-  const supabase = await createSupabaseServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) redirect("/login?next=/admin/treasury");
-
-  const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).maybeSingle();
-  const isTreasuryAdmin = profile?.role === "super_admin";
-  const isLocalPreview = process.env.NODE_ENV === "development";
-  if (!isTreasuryAdmin && !isLocalPreview) redirect("/admin");
-
-  const monthStart = startOfCurrentMonth();
-  const [{ data: monthRevenue, error: revenueError }, { data: allRevenue }, { data: projects }, { data: pendingPayouts }] = await Promise.all([
-    supabase.from("revenue_ledger").select("project_id, arm, amount_cents, revenue_type").gte("received_on", monthStart).returns<RevenueRow[]>(),
-    supabase.from("revenue_ledger").select("project_id, arm, amount_cents, revenue_type").returns<RevenueRow[]>(),
-    supabase.from("projects").select("id, project_code, title, investment_cents, status").order("created_at", { ascending: false }).returns<ProjectRow[]>(),
-    supabase.from("payouts").select("amount_cents, due_on").eq("status", "pending").returns<PayoutRow[]>(),
-  ]);
-
-  const monthly = summarizeRevenue((monthRevenue ?? []).filter((entry) => entry.revenue_type !== "expense").map((entry) => ({ arm: entry.arm, amountCents: entry.amount_cents })));
-  const historicRevenue = (allRevenue ?? []).filter((entry) => entry.revenue_type !== "expense");
-  const projectRows = projects ?? [];
-  const pendingPayoutCents = (pendingPayouts ?? []).reduce((total, payout) => total + payout.amount_cents, 0);
-  const projectSummaries = projectRows.map((project) => {
-    const revenueCents = historicRevenue.filter((entry) => entry.project_id === project.id).reduce((total, entry) => total + entry.amount_cents, 0);
-    const profitCents = revenueCents - project.investment_cents;
-    const roi = project.investment_cents ? Math.round((profitCents / project.investment_cents) * 100) : null;
-    return { ...project, revenueCents, profitCents, roi };
-  });
-
-  return <main className="min-h-screen bg-void px-5 py-8 text-bone sm:px-8"><div className="mx-auto max-w-7xl"><header className="flex flex-wrap items-end justify-between gap-5 border-b border-mercury pb-6"><div><a href="/admin" className="font-mono text-[10px] uppercase tracking-[.16em] text-ghost transition hover:text-flux">← Operations</a><p className="mt-5 font-mono text-[10px] uppercase tracking-[.18em] text-plasma">Whole Body Studios / central treasury</p><h1 className="mt-3 font-display text-5xl leading-none">The center holds the value.</h1><p className="mt-4 max-w-2xl text-sm leading-6 text-ghost">A single, real-time ledger for the four studio arms—designed around Feed First, so artists are paid before the system grows.</p></div><div className="border border-flux px-4 py-3 font-mono text-[10px] uppercase tracking-[.14em] text-flux">{isTreasuryAdmin ? "Super-admin field" : "Local preview"}</div></header>{!isTreasuryAdmin ? <p className="mt-5 border border-plasma/60 bg-carbon px-4 py-3 font-mono text-[10px] uppercase leading-5 tracking-[.1em] text-ghost">Local preview mode: the Treasury interface is visible for testing. Production financial data remains restricted to super-admin accounts.</p> : null}<div className="mt-7"><TreasuryQuincunx totalCents={monthly.totalCents} byArm={monthly.byArm} /></div><section className="mt-4 grid gap-3 border border-mercury bg-mercury sm:grid-cols-2 lg:grid-cols-4"><Metric label="Artist share · 50%" value={formatUsd(monthly.allocation.artist)} /><Metric label="Guild share · 25%" value={formatUsd(monthly.allocation.guild)} /><Metric label="Infrastructure · 15%" value={formatUsd(monthly.allocation.infrastructure)} /><Metric label="Pending payouts" value={formatUsd(pendingPayoutCents)} /></section><section className="mt-7 border border-mercury bg-carbon"><header className="flex flex-wrap items-end justify-between gap-4 border-b border-mercury p-5"><div><p className="font-mono text-[10px] uppercase tracking-[.16em] text-plasma">Project profitability</p><h2 className="mt-2 font-display text-3xl leading-none">Every project carries its own story.</h2></div><p className="font-mono text-[10px] uppercase tracking-[.12em] text-ghost">{revenueError ? "Revenue field unavailable" : `${projectSummaries.length} tracked projects`}</p></header>{projectSummaries.length ? <div className="divide-y divide-mercury">{projectSummaries.map((project) => <article className="grid gap-4 p-5 sm:grid-cols-[minmax(0,1fr)_repeat(3,auto)] sm:items-center" key={project.id}><div><p className="font-mono text-[10px] uppercase tracking-[.13em] text-ghost">{project.project_code} · {project.status.replaceAll("_", " ")}</p><h3 className="mt-2 font-display text-2xl leading-none">{project.title}</h3></div><Value label="Investment" value={formatUsd(project.investment_cents)} /><Value label="Revenue" value={formatUsd(project.revenueCents)} /><Value label={project.roi === null ? "ROI" : `ROI · ${project.roi}%`} value={formatUsd(project.profitCents)} /></article>)}</div> : <div className="p-8 sm:p-12"><p className="font-mono text-[10px] uppercase tracking-[.16em] text-plasma">No project ledger yet</p><p className="mt-4 max-w-xl text-sm leading-6 text-ghost">Create a project, record the investment, and let each studio arm append timeline and revenue events. The dashboard will calculate the Treasury from those entries.</p></div>}</section></div></main>;
+  const supabase = await createSupabaseServerClient(); const { data: { user } } = await supabase.auth.getUser(); if (!user) redirect("/login?next=/admin/treasury"); const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).maybeSingle(); const isAdmin = profile?.role === "super_admin"; const isDirector = profile?.role === "booking_director"; if (!isAdmin && !isDirector) redirect("/admin/dashboard");
+  const [{ data: monthRows }, { data: allRows }, { data: projects }, { data: pendingPayouts }] = await Promise.all([supabase.from("revenue_ledger").select("project_id,arm,amount_cents,revenue_type").gte("received_on", monthStart()).returns<Revenue[]>(), supabase.from("revenue_ledger").select("project_id,arm,amount_cents,revenue_type").returns<Revenue[]>(), supabase.from("projects").select("id,project_code,title,investment_cents,status").order("created_at", { ascending: false }).returns<Project[]>(), supabase.from("payouts").select("amount_cents").eq("status", "pending").returns<Payout[]>()]);
+  const thisMonth = summarizeRevenue((monthRows ?? []).filter((row) => row.revenue_type !== "expense").map((row) => ({ arm: row.arm, amountCents: row.amount_cents }))); const allRevenue = (allRows ?? []).filter((row) => row.revenue_type !== "expense"); const payoutTotal = (pendingPayouts ?? []).reduce((sum, payout) => sum + payout.amount_cents, 0);
+  const projectSummary = (projects ?? []).map((project) => { const revenue = allRevenue.filter((row) => row.project_id === project.id).reduce((sum, row) => sum + row.amount_cents, 0); return { ...project, revenue, net: revenue - project.investment_cents }; });
+  return <main className="min-h-screen bg-void px-5 py-8 text-bone sm:px-8"><div className="mx-auto max-w-7xl"><header className="flex flex-wrap items-end justify-between gap-5 border-b border-mercury pb-6"><div><a className="font-mono text-[10px] uppercase tracking-[.16em] text-ghost hover:text-flux" href="/admin/money">← Money</a><p className="mt-5 font-mono text-[10px] uppercase tracking-[.18em] text-plasma">Whole Body Studios / central treasury</p><h1 className="mt-3 font-display text-5xl leading-none">The center holds the value.</h1><p className="mt-4 max-w-2xl text-sm leading-6 text-ghost">A real-time view of revenue across the four arms. Artist payouts remain visible before the system grows.</p></div><span className="border border-flux px-4 py-3 font-mono text-[10px] uppercase tracking-[.12em] text-flux">{isAdmin ? "Super-admin field" : "Director summary"}</span></header>{isDirector ? <p className="mt-5 border border-plasma/50 bg-plasma/5 p-4 text-xs leading-5 text-ghost">Director view shows operating summaries only. Expense lines, tax reports, and financial mutations remain reserved for the super-admin role.</p> : null}<div className="mt-6"><TreasuryQuincunx byArm={thisMonth.byArm} totalCents={thisMonth.totalCents} /></div><section className="mt-4 grid gap-px border border-mercury bg-mercury sm:grid-cols-4"><Metric label="Artist share · 50%" value={formatUsd(thisMonth.allocation.artist)} /><Metric label="Guild share · 25%" value={formatUsd(thisMonth.allocation.guild)} /><Metric label="Infrastructure · 15%" value={formatUsd(thisMonth.allocation.infrastructure)} /><Metric label="Pending payouts" value={formatUsd(payoutTotal)} /></section>{isAdmin ? <section className="mt-6 border border-mercury bg-carbon"><header className="border-b border-mercury p-5"><p className="font-mono text-[9px] uppercase tracking-[.15em] text-plasma">Project profitability</p><h2 className="mt-2 font-display text-3xl leading-none">Every project carries its own story.</h2></header>{projectSummary.length ? <div className="divide-y divide-mercury">{projectSummary.map((project) => <article className="grid gap-3 p-5 sm:grid-cols-[minmax(0,1fr)_auto_auto] sm:items-center" key={project.id}><div><p className="font-mono text-[9px] uppercase tracking-[.1em] text-ghost">{project.project_code} · {project.status.replaceAll("_", " ")}</p><h3 className="mt-2 font-display text-2xl leading-none">{project.title}</h3></div><Value label="Revenue" value={formatUsd(project.revenue)} /><Value label="Net" value={formatUsd(project.net)} /></article>)}</div> : <p className="p-6 text-sm text-ghost">No project ledger entries yet.</p>}</section> : null}</div></main>;
 }
-
-function Metric({ label, value }: { label: string; value: string }) {
-  return <article className="bg-carbon p-5"><p className="font-mono text-[10px] uppercase tracking-[.12em] text-ghost">{label}</p><p className="mt-4 font-display text-3xl leading-none">{value}</p></article>;
-}
-
-function Value({ label, value }: { label: string; value: string }) {
-  return <div className="sm:text-right"><p className="font-mono text-[10px] uppercase tracking-[.12em] text-ghost">{label}</p><p className="mt-2 font-display text-2xl leading-none">{value}</p></div>;
-}
+function Metric({ label, value }: { label: string; value: string }) { return <article className="bg-carbon p-5"><p className="font-mono text-[9px] uppercase tracking-[.12em] text-ghost">{label}</p><p className="mt-3 font-display text-3xl leading-none text-flux">{value}</p></article>; }
+function Value({ label, value }: { label: string; value: string }) { return <div className="sm:text-right"><p className="font-mono text-[9px] uppercase tracking-[.1em] text-ghost">{label}</p><p className="mt-2 font-display text-2xl leading-none">{value}</p></div>; }

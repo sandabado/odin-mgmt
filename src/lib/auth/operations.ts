@@ -19,3 +19,12 @@ export async function getOperationsSupabase() {
 
   return { supabase, userId: user.id } as const;
 }
+
+/** Financial detail is reserved for super-admins; directors see Treasury summaries. */
+export async function getSuperAdminSupabase() {
+  const access = await getOperationsSupabase();
+  if ("response" in access) return access;
+  const { data: profile, error } = await access.supabase.from("profiles").select("role").eq("id", access.userId).maybeSingle();
+  if (error || profile?.role !== "super_admin") return { response: fail("FORBIDDEN", "Financial detail is reserved for super-admins.") } as const;
+  return access;
+}
