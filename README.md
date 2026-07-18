@@ -2,6 +2,10 @@
 
 Public-facing artist management and booking site for the Whole Body Records roster.
 
+## Operating reference
+
+This repository follows the ØDIN nine-layer operating architecture, proof-first workflow, human-checkpoint model, and sacred-minimalism design principles documented in [`docs/ODIN_MANAGEMENT_COMPLETE_TRAINING.md`](docs/ODIN_MANAGEMENT_COMPLETE_TRAINING.md). Repository-specific execution rules live in [`AGENTS.md`](AGENTS.md).
+
 ## Current MVP
 
 - Public management and booking presence

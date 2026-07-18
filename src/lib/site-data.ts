@@ -1,5 +1,5 @@
 export const artists = [
-  { name: "Sandābādo", discipline: "Music · Live · Film", mark: "∞", summary: "Warm-blooded electronic music for the long road home.", color: "#a995ff" },
+  { name: "Sandābādo", discipline: "Music · Live · Film", mark: "∞", summary: "Warm-blooded electronic music for the long road home.", color: "#a995ff", image: "/images/artists/sandabado/sandabado-joshua-tree-portrait.jpg", imageAlt: "Sandābādo in the Joshua Tree desert", imagePosition: "50% 50%" },
   { name: "Father Atlas", discipline: "Songwriter · Producer", mark: "A", summary: "Songs made at the edge of the map, with a compass still inside them.", color: "#d9b977" },
   { name: "Palo Xanto", discipline: "Artist · Fieldwork", mark: "P", summary: "Ritual sound, living archives, and culture built in public.", color: "#91cdbf" },
   { name: "Future signal", discipline: "Open roster", mark: "+", summary: "We work with artists building a body of work worth protecting.", color: "#e8e4ee" },
