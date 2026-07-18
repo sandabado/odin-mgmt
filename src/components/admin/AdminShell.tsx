@@ -13,11 +13,11 @@ type NavGroup = { label: string; icon: Icon; href: string; children?: NavChild[]
 
 const groups: NavGroup[] = [
   { label: "Dashboard", icon: CircleDot, href: "/admin/dashboard" },
+  { label: "Calendar", icon: CalendarDays, href: "/admin/calendar" },
   { label: "People", icon: Users, href: "/admin/people", children: [{ label: "Artists", icon: Users, href: "/admin/artists" }, { label: "Venues", icon: MapPin, href: "/admin/venues" }, { label: "Partner artists", icon: UserRound, status: "Soon" }, { label: "Contacts", icon: UserRound, href: "/admin/contacts" }, { label: "Swap board", icon: Repeat2, status: "Soon" }] },
   { label: "Outreach", icon: Newspaper, href: "/admin/outreach", children: [{ label: "Campaigns", icon: Newspaper, href: "/admin/campaigns" }, { label: "Deals", icon: FileText, href: "/admin/deals" }, { label: "Contracts", icon: FileText, status: "Soon" }, { label: "Press coverage", icon: Sparkles, status: "Soon" }] },
   { label: "Money", icon: Landmark, href: "/admin/money", children: [{ label: "Treasury", icon: Landmark, href: "/admin/treasury" }, { label: "Expenses", icon: WalletCards, href: "/admin/expenses", superAdminOnly: true }, { label: "Tax report", icon: FileText, href: "/admin/tax-report", superAdminOnly: true }] },
   { label: "Studio", icon: Music2, href: "/admin/studio", children: [{ label: "Projects", icon: CircleDot, status: "Soon" }, { label: "Promo studio", icon: Sparkles, status: "Soon" }, { label: "Engineering", icon: Music2, href: "/admin/engineering" }, { label: "Records", icon: Music2, status: "Soon" }] },
-  { label: "Calendar", icon: CalendarDays, href: "/admin/calendar" },
   { label: "Show prep", icon: Wrench, href: "/admin/show-prep", children: [{ label: "Run sheets", icon: FileText, href: "/admin/run-sheets" }, { label: "Setlists", icon: Music2, href: "/admin/setlists" }, { label: "Gear", icon: Wrench, href: "/admin/gear" }] },
 ];
 
