@@ -1,13 +1,13 @@
 import { NextRequest } from "next/server";
 import { fail, ok } from "@/lib/api-response";
-import { getOperationsSupabase } from "@/lib/auth/operations";
+import { getSuperAdminSupabase } from "@/lib/auth/operations";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { updateExpenseSchema, validateRequestBody } from "@/lib/validators";
 
 export async function PATCH(request: NextRequest, { params }: { params: Promise<{ expenseId: string }> }) {
   const bodyResult = await validateRequestBody(request, updateExpenseSchema);
   if (!bodyResult.success) return bodyResult.response;
-  const access = await getOperationsSupabase();
+  const access = await getSuperAdminSupabase();
   if ("response" in access) return access.response;
   if (!checkRateLimit(`expenses:update:${access.userId}`, { limit: 60, windowMs: 60_000 }).allowed) return fail("RATE_LIMITED", "Too many expense changes. Try again shortly.");
   const { expenseId } = await params; const input = bodyResult.data;

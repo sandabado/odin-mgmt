@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { fail } from "@/lib/api-response";
-import { getOperationsSupabase } from "@/lib/auth/operations";
+import { getSuperAdminSupabase } from "@/lib/auth/operations";
 
 const safeDate = (value: string | null, fallback: string) => value && /^\d{4}-\d{2}-\d{2}$/.test(value) ? value : fallback;
 const csvCell = (value: unknown) => `"${String(value ?? "").replaceAll('"', '""')}"`;
 
 export async function GET(request: NextRequest) {
-  const access = await getOperationsSupabase();
+  const access = await getSuperAdminSupabase();
   if ("response" in access) return access.response;
   const { searchParams } = new URL(request.url);
   const year = String(new Date().getFullYear());
