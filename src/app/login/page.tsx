@@ -29,7 +29,9 @@ export default function LoginPage() {
       }
 
       if (mode === "sign-in") {
-        window.location.assign("/admin");
+        const next = new URLSearchParams(window.location.search).get("next");
+        const destination = next?.startsWith("/admin") ? next : "/admin";
+        window.location.assign(destination);
         return;
       }
 

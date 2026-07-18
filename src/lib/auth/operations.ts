@@ -17,5 +17,5 @@ export async function getOperationsSupabase() {
     return { response: fail("FORBIDDEN", "You do not have access to this operations module.") } as const;
   }
 
-  return { supabase } as const;
+  return { supabase, userId: user.id } as const;
 }

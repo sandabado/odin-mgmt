@@ -71,7 +71,9 @@ export async function middleware(request: NextRequest) {
   }
 
   if (user && isLogin) {
-    return NextResponse.redirect(new URL("/admin", request.url));
+    const next = request.nextUrl.searchParams.get("next");
+    const destination = next?.startsWith("/admin") ? next : "/admin";
+    return NextResponse.redirect(new URL(destination, request.url));
   }
 
   if (user && isProtected) {

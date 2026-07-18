@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { fail, ok } from "@/lib/api-response";
 import { getOperationsSupabase } from "@/lib/auth/operations";
+import { checkRateLimit } from "@/lib/rate-limit";
 import { contactListQuerySchema, createContactSchema, validateRequestBody } from "@/lib/validators";
 
 type ContactListItem = {
@@ -32,7 +33,8 @@ export async function GET(request: NextRequest) {
   let requestQuery = access.supabase
     .from("contacts")
     .select("id, name, company, category, email, location, region, genre_focus, warmth_score, last_contact_date, next_outreach, tags")
-    .order("warmth_score", { ascending: false });
+    .order("warmth_score", { ascending: false })
+    .limit(100);
 
   if (category) requestQuery = requestQuery.eq("category", category);
   if (region) requestQuery = requestQuery.eq("region", region);
@@ -50,6 +52,13 @@ export async function POST(request: NextRequest) {
 
   const access = await getOperationsSupabase();
   if ("response" in access) return access.response;
+
+  const rateLimit = checkRateLimit(`contacts:create:${access.userId}`, { limit: 30, windowMs: 60_000 });
+  if (!rateLimit.allowed) {
+    const response = fail("RATE_LIMITED", "Too many contact changes. Try again shortly.");
+    response.headers.set("Retry-After", String(rateLimit.retryAfterSeconds));
+    return response;
+  }
 
   const input = bodyResult.data;
   const { data, error } = await access.supabase.from("contacts").insert({

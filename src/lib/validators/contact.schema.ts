@@ -32,7 +32,7 @@ export const updateContactSchema = createContactSchema.partial();
 export const contactListQuerySchema = z.object({
   category: z.enum(contactCategories).optional(),
   region: z.enum(contactRegions).optional(),
-  search: z.string().trim().min(1).max(200).optional(),
+  search: z.string().trim().min(1).max(200).regex(/^[\p{L}\p{N}\s.'-]+$/u, "Search may only contain letters, numbers, spaces, periods, apostrophes, and hyphens.").optional(),
   minWarmth: z.coerce.number().int().min(0).max(100).optional(),
 }).strict();
 

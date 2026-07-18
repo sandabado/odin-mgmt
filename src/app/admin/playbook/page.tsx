@@ -12,8 +12,5 @@ export default async function PlaybookPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login?next=/admin/playbook");
 
-  const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).maybeSingle();
-  if (profile?.role !== "super_admin" && profile?.role !== "booking_director") redirect("/admin");
-
   return <main className="min-h-full p-5 sm:p-8"><OperationsPlaybook /></main>;
 }
