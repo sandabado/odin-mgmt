@@ -16,11 +16,11 @@ const navigation: NavSection[] = [
   { label: "Central", items: [
     { label: "Command hub", icon: CircleDot, href: "/admin" },
     { label: "Treasury", icon: Landmark, href: "/admin/treasury" },
-    { label: "Projects", icon: BriefcaseBusiness, status: "Next" },
+    { label: "Artist studios", icon: BriefcaseBusiness, href: "/admin/artists" },
   ] },
   { label: "Management", items: [
     { label: "Venues", icon: MapPin, status: "Next" },
-    { label: "Artists", icon: Users, status: "Next" },
+    { label: "Artists", icon: Users, href: "/admin/artists" },
     { label: "Partner artists", icon: UsersRound, status: "Next" },
     { label: "Swap board", icon: Repeat2, status: "Next" },
   ] },

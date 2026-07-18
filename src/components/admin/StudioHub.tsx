@@ -9,9 +9,9 @@ type StudioArm = {
 
 const studioArms: StudioArm[] = [
   { id: "pr", label: "PR", capabilities: "Press · Media · Campaigns", state: "Next arm", position: "sm:col-start-2 sm:row-start-1" },
-  { id: "records", label: "Records", capabilities: "Publishing · Sync · Distribution", state: "Next arm", position: "sm:col-start-1 sm:row-start-2" },
-  { id: "engineering", label: "Engineering", capabilities: "Recording · Mixing · Mastering", state: "Next arm", position: "sm:col-start-3 sm:row-start-2" },
-  { id: "management", label: "Management", capabilities: "Odin · Booking · Relationships", href: "/admin/contacts", state: "Network live", position: "sm:col-start-2 sm:row-start-3" },
+  { id: "records", label: "Records", capabilities: "Publishing · Sync · Distribution", href: "/admin/artists", state: "Artist studios live", position: "sm:col-start-1 sm:row-start-2" },
+  { id: "engineering", label: "Engineering", capabilities: "Recording · Mixing · Mastering", href: "/admin/artists", state: "Artist studios live", position: "sm:col-start-3 sm:row-start-2" },
+  { id: "management", label: "Management", capabilities: "Odin · Booking · Relationships", href: "/admin/artists", state: "Artist studios live", position: "sm:col-start-2 sm:row-start-3" },
 ];
 
 function ArmCard({ arm }: { arm: StudioArm }) {
