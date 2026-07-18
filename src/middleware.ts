@@ -3,6 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 
 const protectedRoutes = [
   "/admin",
+  "/artist",
   "/dashboard",
   "/venues",
   "/leads",
@@ -32,6 +33,13 @@ const bookingRoutes = [
 
 function matchesRoute(pathname: string, routes: readonly string[]) {
   return routes.some((route) => pathname === route || pathname.startsWith(`${route}/`));
+}
+
+function safeDestination(next: string | null) {
+  if (!next) return "/admin";
+  if (next === "/admin" || next.startsWith("/admin/")) return next;
+  if (next === "/artist" || next.startsWith("/artist/")) return next;
+  return "/admin";
 }
 
 export async function middleware(request: NextRequest) {
@@ -72,7 +80,7 @@ export async function middleware(request: NextRequest) {
 
   if (user && isLogin) {
     const next = request.nextUrl.searchParams.get("next");
-    const destination = next?.startsWith("/admin") ? next : "/admin";
+    const destination = safeDestination(next);
     return NextResponse.redirect(new URL(destination, request.url));
   }
 
@@ -95,6 +103,7 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     "/admin/:path*",
+    "/artist/:path*",
     "/dashboard/:path*",
     "/venues/:path*",
     "/leads/:path*",

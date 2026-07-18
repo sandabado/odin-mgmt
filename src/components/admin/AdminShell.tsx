@@ -35,6 +35,13 @@ const navigation: NavSection[] = [
     { label: "Records", icon: WalletCards, status: "Next" },
     { label: "Press", icon: Newspaper, status: "Next" },
   ] },
+  { label: "Band ops", items: [
+    { label: "Run sheets", icon: FileText, href: "/admin/band-ops/run-sheets" },
+    { label: "Setlists", icon: Music2, href: "/admin/band-ops/setlists" },
+    { label: "Meetings", icon: CalendarDays, href: "/admin/band-ops/meetings" },
+    { label: "Stage plots", icon: MapPin, href: "/admin/band-ops/stage-plots" },
+    { label: "Gear", icon: WalletCards, href: "/admin/band-ops/gear" },
+  ] },
   { label: "System", items: [
     { label: "Playbook", icon: BookOpen, href: "/admin/playbook" },
     { label: "Calendar", icon: CalendarDays, status: "Next" },
@@ -65,7 +72,7 @@ function TopBar({ onMenu }: { onMenu: () => void }) {
     }
   }
 
-  return <header className="sticky top-0 z-20 flex min-h-16 items-center justify-between gap-4 border-b border-mercury bg-carbon/95 px-4 backdrop-blur sm:px-6"><div className="flex min-w-0 flex-1 items-center gap-3"><button aria-label="Open navigation" className="p-1 text-ghost hover:text-bone lg:hidden" onClick={onMenu} type="button"><Menu className="h-5 w-5" /></button><div className="relative hidden max-w-md flex-1 sm:block"><Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ghost" /><input aria-label="Global search" className="w-full border border-mercury bg-steel py-2 pl-9 pr-3 font-mono text-xs text-bone outline-none placeholder:text-ghost focus:border-plasma" disabled placeholder="Search field preparing…" /></div></div><div className="flex items-center gap-2 sm:gap-4"><button aria-label="Notifications" className="relative p-2 text-ghost transition hover:bg-steel hover:text-bone" type="button"><Bell className="h-4 w-4" /><span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 bg-plasma" /></button><div className="hidden border-l border-mercury pl-4 sm:block"><p className="font-mono text-[10px] uppercase tracking-[.1em] text-bone">Authenticated field</p><p className="mt-0.5 font-mono text-[8px] uppercase tracking-[.12em] text-ghost">Odin operations</p></div><button aria-label="Sign out" className="p-2 text-ghost transition hover:bg-steel hover:text-bone disabled:opacity-50" disabled={state === "signing-out"} onClick={signOut} type="button"><LogOut className="h-4 w-4" /></button>{state === "error" ? <span className="sr-only">Unable to sign out. Try again.</span> : null}</div></header>;
+  return <header className="sticky top-0 z-20 flex min-h-16 items-center justify-between gap-4 border-b border-mercury bg-carbon/95 px-4 backdrop-blur sm:px-6"><div className="flex min-w-0 flex-1 items-center gap-3"><button aria-label="Open navigation" className="p-1 text-ghost hover:text-bone lg:hidden" onClick={onMenu} type="button"><Menu className="h-5 w-5" /></button><div className="relative hidden max-w-md flex-1 sm:block"><Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ghost" /><input aria-label="Global search" className="w-full border border-mercury bg-steel py-2 pl-9 pr-3 font-mono text-xs text-bone outline-none placeholder:text-ghost focus:border-plasma" disabled placeholder="Search field preparing…" /></div></div><div className="flex items-center gap-2 sm:gap-4"><button aria-label="Notifications" className="relative p-2 text-ghost transition hover:bg-steel hover:text-bone" type="button"><Bell className="h-4 w-4" /><span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 bg-plasma" /></button><div className="hidden border-l border-mercury pl-4 sm:block"><p className="font-mono text-[10px] uppercase tracking-[.1em] text-bone">Authenticated field</p><p className="mt-0.5 font-mono text-[8px] uppercase tracking-[.12em] text-ghost">øDIN operations</p></div><button aria-label="Sign out" className="p-2 text-ghost transition hover:bg-steel hover:text-bone disabled:opacity-50" disabled={state === "signing-out"} onClick={signOut} type="button"><LogOut className="h-4 w-4" /></button>{state === "error" ? <span className="sr-only">Unable to sign out. Try again.</span> : null}</div></header>;
 }
 
 export function AdminShell({ children }: { children: React.ReactNode }) {
