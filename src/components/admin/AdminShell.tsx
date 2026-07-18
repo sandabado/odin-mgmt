@@ -31,7 +31,7 @@ const navigation: NavSection[] = [
   ] },
   { label: "Studio arms", items: [
     { label: "Promo studio", icon: Sparkles, status: "Next" },
-    { label: "Engineering", icon: Music2, status: "Next" },
+    { label: "Engineering", icon: Music2, href: "/admin/engineering" },
     { label: "Records", icon: WalletCards, status: "Next" },
     { label: "Press", icon: Newspaper, status: "Next" },
   ] },
