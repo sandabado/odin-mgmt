@@ -13,7 +13,7 @@ export function SwapNetwork() {
 
   return (
     <figure className="swap-network">
-      <svg aria-labelledby="exchange-map-title exchange-map-description" className="swap-map" preserveAspectRatio="xMidYMid slice" role="img" viewBox="0 0 680 580" xmlns="http://www.w3.org/2000/svg">
+      <svg aria-labelledby="exchange-map-title exchange-map-description" className="swap-map" preserveAspectRatio="xMidYMid meet" role="img" viewBox="-34 -28 748 636" xmlns="http://www.w3.org/2000/svg">
         <title id="exchange-map-title">ØDIN exchange routes across Southern California</title>
         <desc id="exchange-map-description">A map connecting Joshua Tree, Los Angeles, and San Diego in a three-city artist exchange.</desc>
         <defs>
@@ -23,7 +23,7 @@ export function SwapNetwork() {
           <pattern height="34" id="swap-grid" patternUnits="userSpaceOnUse" width="34"><path d="M 34 0 L 0 0 0 34" fill="none" stroke="rgba(215,210,255,.12)" strokeWidth=".7" /></pattern>
         </defs>
 
-        <rect className="swap-map__ocean" height="580" width="680" />
+        <rect className="swap-map__ocean" height="636" width="748" x="-34" y="-28" />
         <path className="swap-map__land" d="M286 0H680V580H308c31-52 37-89 26-125-14-45-41-73-31-116 10-43 40-73 25-114-16-43-48-71-36-111 13-45 47-78 28-128-13-34-27-61-34-100Z" />
         <path className="swap-map__coast" d="M286 0c7 39 21 66 34 100 19 50-15 83-28 128-12 40 20 68 36 111 15 41-15 71-25 114-10 43 17 71 31 116 11 36 5 73-26 125" />
         <path className="swap-map__border" d="M469 0c-8 61 12 111 43 151 30 39 44 79 25 132-19 53 22 99 58 130 31 27 54 65 85 109" />
