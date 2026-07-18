@@ -1,0 +1,16 @@
+export const LOGIN_MESSAGES = [
+  "The silence holds the whole.",
+  "What is built in the void sustains the fire.",
+  "The still point moves everything.",
+  "Ø is not empty. Ø is potential.",
+  "All arms reach from the center. All value returns to it.",
+  "Five arms. One hub. The void remembers everything.",
+  "The wheel turns because the axle is still.",
+  "You don't fill Ø. You hold it.",
+  "What flows through the center feeds every arm.",
+  "From nothing, a body. From a body, a sound. From a sound, the field.",
+  "Hung in the wind for nine nights. What did the silence teach?",
+  "The center holds not by force, but by absence.",
+  "Ødin is not Odin. It's the space Odin entered.",
+  "Every arm is a muscle. The center is the bone.",
+] as const;
