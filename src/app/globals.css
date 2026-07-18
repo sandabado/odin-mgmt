@@ -87,24 +87,14 @@ h1 { max-width:720px; margin:18px 0 27px; font-size:clamp(4.2rem,8vw,8.5rem); li
 .exchange::before { position:absolute; z-index:1; inset:0; background:linear-gradient(90deg,rgba(9,9,20,.97) 0%,rgba(13,11,28,.84) 29%,rgba(13,11,28,.28) 64%,rgba(9,9,20,.08) 100%),linear-gradient(180deg,rgba(9,9,20,.88) 0%,transparent 32%,transparent 68%,rgba(9,9,20,.92) 100%); content:""; pointer-events:none; }
 .exchange-container { position:relative; z-index:2; max-width:1300px; margin:0 auto; padding:clamp(88px,9vw,136px) clamp(22px,5vw,72px) clamp(72px,8vw,112px); pointer-events:none; }
 .exchange-container .section-heading,.exchange-container .exchange-copy,.exchange-container .exchange-footnote { pointer-events:auto; }
-.exchange > .swap-network { position:absolute; z-index:0; inset:0; width:100%; min-height:0; margin:0; border:0; overflow:hidden; background:#090914; box-shadow:none; }
-.exchange > .swap-network .swap-map { width:100%; height:100%; min-height:0; transform:translateX(3%) scale(.96); transform-origin:center; }
+.california-coast-map { position:absolute; z-index:0; inset:0; overflow:hidden; opacity:.11; mix-blend-mode:screen; pointer-events:none; user-select:none; }
+.california-coast-map img { object-fit:cover; object-position:50% 50%; filter:grayscale(1) sepia(1) saturate(.52) hue-rotate(348deg) contrast(1.62) brightness(.82); transform:scale(1.015); }
 .exchange .exchange-layout { display:flex; align-items:flex-start; justify-content:flex-start; margin-top:clamp(310px,28vw,420px); border:0; background:none; box-shadow:none; }
 .exchange .exchange-copy { width:min(100%,520px); min-height:0; padding:clamp(30px,4vw,52px); border:1px solid rgba(244,241,237,.2); background:rgba(9,9,20,.8); box-shadow:0 30px 80px rgba(0,0,0,.28); backdrop-filter:blur(16px); }
 .exchange .exchange-footnote { max-width:760px; }
-.swap-map__market { cursor:pointer; outline:none; }
-.swap-map__market .swap-map__point,.swap-map__market .swap-map__label text,.swap-map__market .swap-map__label tspan { transition:fill .22s ease,opacity .22s ease,stroke-width .22s ease; }
-.swap-map__market:hover .swap-map__point,.swap-map__market:focus .swap-map__point,.swap-map__market--active .swap-map__point { stroke-width:3; }
-.swap-map__market:hover .swap-map__label tspan,.swap-map__market:focus .swap-map__label tspan,.swap-map__market--active .swap-map__label tspan { fill:rgba(244,241,237,.9); }
-.swap-map__market:focus-visible .swap-map__point { outline:none; filter:drop-shadow(0 0 7px currentColor); }
-.swap-network-detail { position:absolute; right:clamp(24px,5vw,72px); bottom:72px; width:min(340px,28vw); padding:20px 0 0 22px; border-left:1px solid rgba(244,241,237,.28); color:var(--paper); }
-.swap-network-detail p { margin:0 0 8px; color:#c9bfff; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:8px; letter-spacing:.16em; text-transform:uppercase; }
-.swap-network-detail strong { display:block; margin-bottom:10px; font-family:Georgia,"Times New Roman",serif; font-size:clamp(25px,2.4vw,38px); font-weight:400; letter-spacing:-.035em; }
-.swap-network-detail span { display:block; color:rgba(244,241,237,.58); font-size:11px; line-height:1.55; }
-.exchange > .swap-network .swap-network-status { right:auto; bottom:72px; left:clamp(24px,5vw,72px); }
-@media (max-width:980px) { .exchange { min-height:1220px; }.exchange::before { background:linear-gradient(90deg,rgba(9,9,20,.96),rgba(13,11,28,.55) 72%,rgba(9,9,20,.18)),linear-gradient(180deg,rgba(9,9,20,.9),transparent 37%,rgba(9,9,20,.88) 100%); }.exchange > .swap-network .swap-map { transform:translate(2%,-5%) scale(.98); }.exchange .exchange-layout { margin-top:360px; }.swap-network-detail { width:300px; } }
-@media (max-width:760px) { .exchange { min-height:0; }.exchange-container { padding-top:76px; padding-bottom:70px; }.exchange > .swap-network .swap-map { transform:translateY(-17%) scale(.96); }.exchange .exchange-layout { margin:330px 0 0; }.exchange .exchange-copy { width:100%; }.swap-network-detail { display:none; }.exchange > .swap-network .swap-network-status { bottom:24px; }.exchange .exchange-footnote { margin-top:36px; } }
-@media (max-width:580px) { .exchange-title-line { white-space:normal; }.exchange .section-heading h2 { font-size:clamp(2.8rem,14vw,4rem); }.exchange > .swap-network .swap-map { transform:translateY(-19%) scale(.98); }.exchange .exchange-layout { margin-top:280px; }.exchange .exchange-copy { padding:28px 22px 32px; }.exchange > .swap-network .swap-network-status { bottom:18px; } }
+@media (max-width:980px) { .exchange { min-height:1220px; }.exchange::before { background:linear-gradient(90deg,rgba(9,9,20,.96),rgba(13,11,28,.55) 72%,rgba(9,9,20,.18)),linear-gradient(180deg,rgba(9,9,20,.9),transparent 37%,rgba(9,9,20,.88) 100%); }.exchange .exchange-layout { margin-top:360px; } }
+@media (max-width:767px) { .california-coast-map { display:none; }.exchange { min-height:0; }.exchange-container { padding-top:76px; padding-bottom:70px; }.exchange .exchange-layout { margin:330px 0 0; }.exchange .exchange-copy { width:100%; }.exchange .exchange-footnote { margin-top:36px; } }
+@media (max-width:580px) { .exchange-title-line { white-space:normal; }.exchange .section-heading h2 { font-size:clamp(2.8rem,14vw,4rem); }.exchange .exchange-layout { margin-top:280px; }.exchange .exchange-copy { padding:28px 22px 32px; } }
 
 /* Keep the exchange proposition in one reading column before the map opens up. */
 .exchange .section-heading { grid-template-areas:"eyebrow" "title" "copy"; grid-template-columns:minmax(0,1fr); gap:0; align-items:start; }
