@@ -35,7 +35,7 @@ export function StudioSessionForm({ artistId, projects }: { artistId: string; pr
     }
     event.currentTarget.reset();
     setState("idle");
-    setMessage("Session logged in the engineering track.");
+    setMessage("Session logged in recording.");
     router.refresh();
   }
 
