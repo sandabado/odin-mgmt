@@ -6,7 +6,7 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
 
-type RevenueRow = { project_id: string | null; arm: StudioArm; amount_cents: number };
+type RevenueRow = { project_id: string | null; arm: StudioArm; amount_cents: number; revenue_type: string };
 type ProjectRow = { id: string; project_code: string; title: string; investment_cents: number; status: string };
 type PayoutRow = { amount_cents: number; due_on: string | null };
 
@@ -31,14 +31,14 @@ export default async function TreasuryPage() {
 
   const monthStart = startOfCurrentMonth();
   const [{ data: monthRevenue, error: revenueError }, { data: allRevenue }, { data: projects }, { data: pendingPayouts }] = await Promise.all([
-    supabase.from("revenue_ledger").select("project_id, arm, amount_cents").gte("received_on", monthStart).returns<RevenueRow[]>(),
-    supabase.from("revenue_ledger").select("project_id, arm, amount_cents").returns<RevenueRow[]>(),
+    supabase.from("revenue_ledger").select("project_id, arm, amount_cents, revenue_type").gte("received_on", monthStart).returns<RevenueRow[]>(),
+    supabase.from("revenue_ledger").select("project_id, arm, amount_cents, revenue_type").returns<RevenueRow[]>(),
     supabase.from("projects").select("id, project_code, title, investment_cents, status").order("created_at", { ascending: false }).returns<ProjectRow[]>(),
     supabase.from("payouts").select("amount_cents, due_on").eq("status", "pending").returns<PayoutRow[]>(),
   ]);
 
-  const monthly = summarizeRevenue((monthRevenue ?? []).map((entry) => ({ arm: entry.arm, amountCents: entry.amount_cents })));
-  const historicRevenue = allRevenue ?? [];
+  const monthly = summarizeRevenue((monthRevenue ?? []).filter((entry) => entry.revenue_type !== "expense").map((entry) => ({ arm: entry.arm, amountCents: entry.amount_cents })));
+  const historicRevenue = (allRevenue ?? []).filter((entry) => entry.revenue_type !== "expense");
   const projectRows = projects ?? [];
   const pendingPayoutCents = (pendingPayouts ?? []).reduce((total, payout) => total + payout.amount_cents, 0);
   const projectSummaries = projectRows.map((project) => {

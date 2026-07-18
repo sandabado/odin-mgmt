@@ -14,7 +14,7 @@ import {
   ListMusic,
   LogOut,
   Menu,
-  MessagesSquare,
+  Wrench,
   X,
 } from "lucide-react";
 import { createBrowserSupabaseClient } from "@/lib/supabase/browser";
@@ -25,12 +25,9 @@ type NavItem = { href: string; label: string; icon: Icon };
 const navItems: NavItem[] = [
   { href: "/artist/dashboard", label: "Home", icon: Home },
   { href: "/artist/schedule", label: "Schedule", icon: CalendarDays },
-  { href: "/artist/setlists", label: "Setlists", icon: ListMusic },
-  { href: "/artist/gear", label: "Gear", icon: Guitar },
-  { href: "/artist/promo", label: "Promo", icon: Image },
-  { href: "/artist/meetings", label: "Meetings", icon: MessagesSquare },
+  { href: "/artist/music", label: "Music", icon: ListMusic },
   { href: "/artist/revenue", label: "Revenue", icon: Landmark },
-  { href: "/artist/settings", label: "Settings", icon: CircleUserRound },
+  { href: "/artist/tools", label: "Tools", icon: Wrench },
 ];
 
 function isCurrent(pathname: string, href: string) {

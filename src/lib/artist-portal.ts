@@ -8,6 +8,7 @@ export type PortalArtist = {
   home_market: string;
   photo_url: string | null;
   status: string;
+  disco_link: string | null;
 };
 
 export type PortalProfile = { full_name: string | null; role: "super_admin" | "booking_director" | "artist" };
@@ -32,7 +33,7 @@ export async function getArtistPortalContext(preferredArtistId?: string) {
   const isOperations = profile?.role === "super_admin" || profile?.role === "booking_director";
   let artistQuery = supabase
     .from("artists")
-    .select("id, profile_id, artist_name, home_market, photo_url, status")
+    .select("id, profile_id, artist_name, home_market, photo_url, status, disco_link")
     .order("status")
     .order("artist_name");
 

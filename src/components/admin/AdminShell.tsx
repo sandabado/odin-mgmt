@@ -16,6 +16,8 @@ const navigation: NavSection[] = [
   { label: "Central", items: [
     { label: "Command hub", icon: CircleDot, href: "/admin" },
     { label: "Treasury", icon: Landmark, href: "/admin/treasury" },
+    { label: "Expenses", icon: WalletCards, href: "/admin/expenses" },
+    { label: "Tax report", icon: FileText, href: "/admin/expenses/tax-report" },
   ] },
   { label: "Management", items: [
     { label: "Artists", icon: Users, href: "/admin/artists" },
@@ -26,6 +28,7 @@ const navigation: NavSection[] = [
   { label: "Network", items: [
     { label: "Contacts", icon: UserRound, href: "/admin/contacts" },
     { label: "Outreach", icon: Sparkles, status: "Next" },
+    { label: "Campaigns", icon: Newspaper, href: "/admin/campaigns" },
     { label: "Deals", icon: FileText, href: "/admin/deals" },
     { label: "Contracts", icon: FileText, status: "Next" },
   ] },

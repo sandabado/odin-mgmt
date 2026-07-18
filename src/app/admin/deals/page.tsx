@@ -11,7 +11,7 @@ type Venue = { id: string; venue_name: string };
 const money = (cents: number | null) => cents === null ? "Value pending" : new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(cents / 100);
 const date = (value: string | null) => value ? new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" }).format(new Date(`${value}T00:00:00`)) : "Date pending";
 
-const stages = [{ label: "Negotiating", value: "negotiating" }, { label: "Agreed", value: "agreed" }, { label: "Completed", value: "completed" }, { label: "Lost", value: "lost" }] as const;
+const stages = [{ label: "Negotiating", value: "negotiating" }, { label: "Agreed", value: "agreed" }, { label: "Confirmed", value: "confirmed" }, { label: "Completed", value: "completed" }, { label: "Lost", value: "lost" }] as const;
 
 export default async function DealsPage({ searchParams }: { searchParams: Promise<{ stage?: string }> }) {
   const { stage } = await searchParams;
