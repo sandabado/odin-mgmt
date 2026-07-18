@@ -19,7 +19,7 @@ const navigation: NavSection[] = [
     { label: "Artist studios", icon: BriefcaseBusiness, href: "/admin/artists" },
   ] },
   { label: "Management", items: [
-    { label: "Venues", icon: MapPin, status: "Next" },
+    { label: "Venues", icon: MapPin, href: "/admin/venues" },
     { label: "Artists", icon: Users, href: "/admin/artists" },
     { label: "Partner artists", icon: UsersRound, status: "Next" },
     { label: "Swap board", icon: Repeat2, status: "Next" },
@@ -27,7 +27,7 @@ const navigation: NavSection[] = [
   { label: "Network", items: [
     { label: "Contacts", icon: UserRound, href: "/admin/contacts" },
     { label: "Outreach", icon: Sparkles, status: "Next" },
-    { label: "Deals", icon: FileText, status: "Next" },
+    { label: "Deals", icon: FileText, href: "/admin/deals" },
     { label: "Contracts", icon: FileText, status: "Next" },
   ] },
   { label: "Studio arms", items: [
