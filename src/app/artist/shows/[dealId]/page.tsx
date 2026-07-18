@@ -184,7 +184,7 @@ export default async function ArtistShowDayPage({
 
   return <>
     <PortalPageHeader
-      eyebrow="øDIN artist field / show day"
+      eyebrow="ØDIN artist field / show day"
       title="Move with the room."
       copy={runSheet.venue_address || "Venue details are being confirmed."}
       detail={clean(runSheet.status)}

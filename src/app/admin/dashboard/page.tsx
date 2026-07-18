@@ -29,6 +29,7 @@ const timeFor = () => new Intl.DateTimeFormat("en-US", { timeZone: "America/Los_
 const addDays = (date: string, days: number) => { const next = new Date(`${date}T12:00:00Z`); next.setUTCDate(next.getUTCDate() + days); return next.toISOString().slice(0, 10); };
 const phasePosition = (phase: string | null | undefined) => ({ recording: 0, mixing: 1, mastering: 2, publishing_setup: 3, distribution: 3, pr_campaign: 4, tour_booking: 5 })[phase || ""] ?? 0;
 const titleCase = (value: string) => value.replaceAll("_", " ");
+const displayName = (value: string) => value.trim().split(/\s+/).map((part) => part ? `${part[0].toUpperCase()}${part.slice(1).toLowerCase()}` : part).join(" ");
 
 export default async function AdminDashboardPage() {
   const supabase = await createSupabaseServerClient();
@@ -137,5 +138,5 @@ export default async function AdminDashboardPage() {
     { id: "swaps", label: "active swaps", count: String(activeSwaps.length), context: activeSwaps[0]?.partner_artist_name || "exchange board ready", href: "/admin/people", icon: "swaps" },
   ];
 
-  return <OperationsDashboard user={{ id: user.id, fullName: profileData?.full_name || user.email || "Administrator", role: profileData?.role || "super_admin", lastLogin: user.last_sign_in_at }} liveItems={liveItems.slice(0, 5)} countdown={countdown} cards={cards} arms={arms} activity={activity} quickLinks={quickLinks} generatedAt={new Date().toISOString()} />;
+  return <OperationsDashboard user={{ id: user.id, fullName: displayName(profileData?.full_name || user.email?.split("@")[0] || "Administrator"), role: profileData?.role || "super_admin", lastLogin: user.last_sign_in_at }} liveItems={liveItems.slice(0, 5)} countdown={countdown} cards={cards} arms={arms} activity={activity} quickLinks={quickLinks} generatedAt={new Date().toISOString()} />;
 }

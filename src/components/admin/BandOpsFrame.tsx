@@ -26,7 +26,7 @@ export function BandOpsFrame({ active, eyebrow, title, description, count, count
         <div className="flex flex-wrap items-end justify-between gap-5">
           <div>
             <Link className="font-mono text-[10px] uppercase tracking-[.16em] text-ghost hover:text-flux" href="/admin">← Command hub</Link>
-            <p className="mt-5 font-mono text-[10px] uppercase tracking-[.18em] text-plasma">øDIN Management / {eyebrow}</p>
+            <p className="mt-5 font-mono text-[10px] uppercase tracking-[.18em] text-plasma">ØDIN Management / {eyebrow}</p>
             <h1 className="mt-3 font-display text-5xl leading-none">{title}</h1>
             <p className="mt-4 max-w-2xl text-sm leading-6 text-ghost">{description}</p>
           </div>

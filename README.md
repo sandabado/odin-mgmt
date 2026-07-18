@@ -1,4 +1,4 @@
-# Odin Management
+# ØDIN Management
 
 Public-facing artist management and booking site for the Whole Body Records roster.
 
@@ -51,4 +51,4 @@ Validate the production build with `npm run build`.
 
 ### 0.1.0 — Public MVP
 
-Initial Odin Management site with public roster, booking positioning, and contact flow.
+Initial ØDIN Management site with public roster, booking positioning, and contact flow.

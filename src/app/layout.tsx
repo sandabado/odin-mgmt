@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "øDIN Management — Artist Management & Booking",
+  title: "ØDIN Management — Artist Management & Booking",
   description: "Artist management and booking infrastructure for independent artists with lasting work.",
-  applicationName: "øDIN Management",
+  applicationName: "ØDIN Management",
   icons: {
     icon: [{ url: "/icon.png", type: "image/png" }],
     apple: [{ url: "/icon.png", type: "image/png" }],

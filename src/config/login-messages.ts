@@ -11,6 +11,6 @@ export const LOGIN_MESSAGES = [
   "From nothing, a body. From a body, a sound. From a sound, the field.",
   "Hung in the wind for nine nights. What did the silence teach?",
   "The center holds not by force, but by absence.",
-  "Ødin is not Odin. It's the space Odin entered.",
+  "ØDIN is not Odin. It's the space Odin entered.",
   "Every arm is a muscle. The center is the bone.",
 ] as const;
