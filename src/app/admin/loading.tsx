@@ -1,1 +1,5 @@
-export default function AdminLoading() { return <main className="min-h-screen px-5 py-[42px] text-bone sm:px-8"><div className="mx-auto grid max-w-7xl animate-pulse gap-[25px]"><section className="admin-panel p-8"><p className="font-mono text-[10px] uppercase tracking-[.16em] text-plasma">Opening ØDIN operations…</p><div className="mt-6 h-8 max-w-xl rounded-full bg-steel/70" /><div className="mt-4 h-3 max-w-sm rounded-full bg-steel/50" /></section><div className="grid gap-4 md:grid-cols-3">{Array.from({ length: 3 }, (_, index) => <div className="admin-card h-[110px] p-5" key={index}><div className="h-3 w-20 rounded-full bg-steel/70" /><div className="mt-6 h-5 w-28 rounded-full bg-steel/50" /></div>)}</div></div></main>; }
+import { OdinLoadingScreen } from "@/components/OdinLoadingScreen";
+
+export default function AdminLoading() {
+  return <OdinLoadingScreen />;
+}

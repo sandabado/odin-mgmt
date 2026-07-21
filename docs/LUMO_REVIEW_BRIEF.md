@@ -73,29 +73,29 @@ The authenticated admin shell uses this top-level order:
 3. Studio
 4. Venues
 5. Campaigns
-6. Showcases
+6. Bookings
 7. People
-8. Outreach
-9. Wallet
-10. Show Prep
+8. Wallet
+9. Show Prep
 
 Supporting groups:
 
-- Outreach: Contracts and Press Coverage, both visibly marked as forthcoming
+- Bookings: booking pipeline plus Contracts, with the central Contracts workspace visibly marked as forthcoming
+- Campaigns: landing-page press desk for logging pitches and earned results, with deeper social, budget, and campaign-state tools in each campaign record
 - Wallet: Inflow and Outflow; financial visibility is role-sensitive
 - Studio: Engineering, with Projects, Promo Studio, and Records marked as forthcoming
 - Show Prep: Run Sheets, Setlists, and Gear
 - Super-admin settings include the operating Playbook; unfinished settings remain clearly labeled
 
-Artists, Venues, Campaigns, Showcases, and People are first-class destinations because they are primary operating objects rather than utility pages.
+Artists, Venues, Campaigns, Bookings, and People are first-class destinations because they are primary operating objects rather than utility pages.
 
 ### Primary workspace shapes
 
 - Dashboard: cross-system status, time-sensitive work, the unified operating schedule, activity, and links into operational records
 - Artists: directory leading to an Artist Studio that unifies projects, recording, releases, campaigns, pipeline, shows, revenue, payouts, and related expenses
 - Venues: filterable room network with market, relationship status, capacity, role, notes, and deal range
-- Campaigns: campaign desk plus detail views for pitches, coverage, social queue, budgets, and campaign state
-- Showcases: booking and deal records connecting artists, venues, dates, terms, and negotiation state
+- Campaigns: campaign desk with landing-page pitch and earned-result actions, plus detail views for social queue, budgets, and campaign state
+- Bookings: booking and deal records connecting artists, venues, dates, terms, contracts, and negotiation state
 - People: private relationship field with role, market, organization, genre focus, outreach dates, and a relationship-warmth indicator
 - Wallet: inflow allocation, outflow expenses, payouts, and revenue records
 - Artist portal: a restricted view of schedule, shows, meetings, music, setlists, gear, promotion, revenue, tools, and settings
