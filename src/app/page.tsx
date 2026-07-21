@@ -6,11 +6,12 @@ import { OdinProcess } from "@/components/OdinProcess";
 import { PromotionCard } from "@/components/PromotionCard";
 import { RosterCard } from "@/components/RosterCard";
 import { SectionHeading } from "@/components/SectionHeading";
+import { EnterOdinLink } from "@/components/EnterOdinLink";
 import { artists, promotions, services } from "@/lib/site-data";
 
 export default function HomePage() {
   return <main>
-    <header className="site-header"><Link className="brand" href="/"><OdinOrbitMark className="brand-mark" decorative /><span>ØDIN<br />Management</span></Link><nav aria-label="Primary navigation"><a href="#roster">Roster</a><a href="#exchange">Exchange</a><a href="#work">Work</a><a href="#approach">Approach</a><a href="#contact">Contact</a></nav><Link className="header-link" href="/login">Enter ØDIN <span aria-hidden="true">→</span></Link></header>
+    <header className="site-header"><Link className="brand" href="/"><OdinOrbitMark className="brand-mark" decorative /><span>ØDIN<br />Management</span></Link><nav aria-label="Primary navigation"><a href="#roster">Roster</a><a href="#exchange">Exchange</a><a href="#work">Work</a><a href="#approach">Approach</a><a href="#contact">Contact</a></nav><EnterOdinLink /></header>
 
     <section className="hero"><div className="hero-backdrop" aria-hidden="true"><span className="light-beam light-beam--violet" /><span className="light-beam light-beam--amber" /><span className="light-beam light-beam--rose" /></div><div className="hero-grid"><div className="hero-copy"><p className="eyebrow">Artist management & booking</p><h1>Make the work.<br /><em>Keep moving.</em></h1><p className="hero-intro">ØDIN Management builds the rooms, relationships, and long-range infrastructure behind independent artists with something real to say.</p><div className="hero-actions"><a className="button button-primary" href="#contact">Bring us a room <span aria-hidden="true">→</span></a><a className="button button-quiet" href="#roster">Meet the roster</a></div></div><div className="hero-signal" aria-label="ØDIN Management live signal"><div className="signal-orbit signal-orbit-one" /><div className="signal-orbit signal-orbit-two" /><div className="signal-center signal-center--mark"><OdinOrbitMark className="hero-orbit-mark" decorative /></div><p>Now playing<br /><strong>Band room / take 01</strong></p></div></div><div className="hero-footer"><span><i className="live-dot" />Live from the band room</span><span>Powered by Whole Body Records · Los Angeles · Morongo Valley</span></div></section>
 
