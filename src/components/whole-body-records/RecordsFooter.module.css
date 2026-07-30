@@ -1,0 +1,416 @@
+.footer.footer:global(.records-footer) {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  padding: 0 !important;
+  background: #070808;
+  color: #f5f2eb;
+}
+
+.footer.footer:global(.records-footer)::before {
+  display: none;
+}
+
+.ritual {
+  width: 100%;
+}
+
+.information {
+  padding: 0 var(--wbr-gutter, clamp(25px, 7vw, 110px)) 24px;
+  border-top: 1px solid rgba(245, 242, 235, 0.16);
+  background: #070808;
+  color: #f5f2eb;
+  font-family: var(--font-records-body), "Schibsted Grotesk", Arial, sans-serif;
+}
+
+.identity {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.wordmarkLink {
+  width: max-content;
+  max-width: 100%;
+  color: #f5f2eb;
+  text-decoration: none;
+}
+
+.closing {
+  max-width: 320px;
+  margin: 0;
+  color: #f5f2eb;
+  font-family: var(--font-records-display), Fraunces, Georgia, serif;
+  font-size: clamp(1.08rem, 1.7vw, 1.45rem);
+  font-optical-sizing: auto;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+.contact {
+  width: max-content;
+  max-width: 100%;
+  color: rgba(245, 242, 235, 0.56);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  line-height: 1.6;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.statement {
+  max-width: 270px;
+  margin: 0;
+  color: rgba(245, 242, 235, 0.62);
+  font-size: 0.78rem;
+  line-height: 1.65;
+}
+
+.memberPortal {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: center;
+  min-height: 94px;
+  border-top: 1px solid rgba(45, 156, 219, 0.72);
+  border-bottom: 1px solid rgba(245, 242, 235, 0.16);
+  padding: 14px 0;
+  color: #f5f2eb;
+  text-decoration: none;
+}
+
+.odinMark {
+  display: block;
+  width: 48px;
+  height: 48px;
+  overflow: visible;
+  color: #2d9cdb;
+}
+
+.odinMark :global(.odin-orbit-mark__signal) {
+  display: none;
+}
+
+.odinMark :global(.odin-orbit-mark__ring),
+.odinMark :global(.odin-orbit-mark__satellites) {
+  animation: none;
+  filter: none;
+}
+
+.memberPortalCopy {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.memberPortalCopy small {
+  color: #2d9cdb;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.memberPortalCopy strong {
+  font-family: var(--font-records-display), Fraunces, Georgia, serif;
+  font-size: clamp(1.35rem, 2vw, 1.8rem);
+  font-optical-sizing: auto;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.memberPortalCopy > span {
+  color: rgba(245, 242, 235, 0.64);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  line-height: 1.45;
+}
+
+.memberPortalArrow {
+  color: #2d9cdb;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: transform 680ms cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.linkGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 34px;
+  margin-top: 0;
+  padding-top: 28px;
+}
+
+.mobileNavigation {
+  display: none;
+}
+
+.navigation {
+  display: block;
+  color: rgba(245, 242, 235, 0.66);
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+  text-transform: none;
+}
+
+.navigationTitle {
+  margin: 0 0 10px;
+  color: #2d9cdb;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.linkList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 18px;
+}
+
+.linkList a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  width: max-content;
+  max-width: 100%;
+  color: inherit;
+  text-decoration: none;
+  transition:
+    color 680ms cubic-bezier(0.25, 0.1, 0.25, 1),
+    transform 680ms cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.artists {
+  display: grid;
+  grid-template-columns: minmax(160px, 0.42fr) minmax(0, 1.58fr);
+  gap: 16px 34px;
+  align-items: baseline;
+  margin-top: 28px;
+  border-top: 1px solid rgba(245, 242, 235, 0.16);
+  border-bottom: 1px solid rgba(245, 242, 235, 0.16);
+  padding: 18px 0;
+}
+
+.artists > p {
+  margin: 0;
+  color: #2d9cdb;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.artists > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+}
+
+.artists a {
+  color: #f5f2eb;
+  font-family: var(--font-records-display), Fraunces, Georgia, serif;
+  font-size: clamp(0.98rem, 1.4vw, 1.2rem);
+  font-optical-sizing: auto;
+  font-weight: 550;
+  line-height: 1.45;
+  text-decoration: none;
+  text-decoration-color: rgba(45, 156, 219, 0.58);
+  text-underline-offset: 5px;
+}
+
+.finalLine {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 25px;
+  padding-top: 18px;
+  color: rgba(245, 242, 235, 0.48);
+  font-size: 0.6875rem;
+  letter-spacing: 0.11em;
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+
+.copyright {
+  color: inherit;
+  font: inherit;
+}
+
+.finalLine a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.footer:global(.records-footer) .information a:hover,
+.footer:global(.records-footer) .information a:focus-visible {
+  color: #2d9cdb;
+}
+
+.footer:global(.records-footer) .linkList a:hover,
+.footer:global(.records-footer) .linkList a:focus-visible {
+  transform: translateX(4px);
+}
+
+.footer:global(.records-footer) .memberPortal:hover .memberPortalArrow,
+.footer:global(.records-footer) .memberPortal:focus-visible .memberPortalArrow {
+  transform: translateX(5px);
+}
+
+.footer:global(.records-footer) .artists a:hover,
+.footer:global(.records-footer) .artists a:focus-visible {
+  text-decoration: underline;
+}
+
+.footer:global(.records-footer) .information a:focus-visible {
+  outline: 1px solid #2d9cdb;
+  outline-offset: 4px;
+}
+
+@media (max-width: 1040px) {
+  .linkGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .information {
+    padding: 0 25px 24px;
+  }
+
+  .memberPortal {
+    grid-template-columns: 42px minmax(0, 1fr);
+    min-height: 100px;
+    padding: 10px 0;
+  }
+
+  .odinMark {
+    width: 42px;
+    height: 42px;
+  }
+
+  .memberPortalArrow {
+    grid-column: 2;
+  }
+
+  .linkGrid {
+    display: block;
+    padding-top: 24px;
+  }
+
+  .linkGrid .navigation {
+    display: none;
+  }
+
+  .statement {
+    max-width: 310px;
+  }
+
+  .identity {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 10px 18px;
+  }
+
+  .identity .closing {
+    margin: 0;
+  }
+
+  .identity .statement,
+  .identity .contact {
+    grid-column: 1 / -1;
+  }
+
+  .mobileNavigation {
+    display: grid;
+    margin-top: 18px;
+    border-top: 1px solid rgba(245, 242, 235, 0.16);
+  }
+
+  .mobileNavigation details {
+    border-bottom: 1px solid rgba(245, 242, 235, 0.16);
+  }
+
+  .mobileNavigation summary {
+    display: flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: space-between;
+    color: #2d9cdb;
+    cursor: pointer;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    list-style: none;
+    text-transform: uppercase;
+  }
+
+  .mobileNavigation summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .mobileNavigation summary::after {
+    color: rgba(245, 242, 235, 0.62);
+    content: "+";
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .mobileNavigation details[open] summary::after {
+    content: "−";
+  }
+
+  .mobileNavigation nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 20px;
+    padding-bottom: 16px;
+  }
+
+  .mobileNavigation nav a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    color: rgba(245, 242, 235, 0.68);
+    font-size: 0.8125rem;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+  }
+
+  .artists {
+    grid-template-columns: 1fr;
+    margin-top: 18px;
+    padding: 14px 0;
+  }
+
+  .finalLine {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .linkList a,
+  .memberPortalArrow {
+    transition: none;
+  }
+
+  .footer:global(.records-footer) .linkList a:hover,
+  .footer:global(.records-footer) .linkList a:focus-visible {
+    transform: none;
+  }
+}

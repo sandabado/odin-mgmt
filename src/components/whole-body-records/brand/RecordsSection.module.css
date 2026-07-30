@@ -1,0 +1,74 @@
+.section {
+  width: 100%;
+  color: var(--records-section-foreground, #f5f2eb);
+  font-family: var(--font-records-body), "Schibsted Grotesk", Arial, sans-serif;
+}
+
+.frame {
+  position: relative;
+  width: 100%;
+  margin-inline: auto;
+  box-sizing: border-box;
+}
+
+.section[data-width="contained"] .frame {
+  max-width: var(--records-section-contained, 1440px);
+  padding-inline: var(--records-section-gutter, clamp(25px, 7vw, 110px));
+}
+
+.section[data-width="inset"] .frame {
+  max-width: var(--records-section-inset, 1120px);
+  padding-inline: var(--records-section-gutter, clamp(25px, 7vw, 110px));
+}
+
+.section[data-rhythm="compact"] .frame {
+  padding-block: 42px;
+}
+
+.section[data-rhythm="standard"] .frame {
+  padding-block: 68px;
+}
+
+.section[data-rhythm="ceremonial"] .frame {
+  padding-block: 110px;
+}
+
+.section[data-divider="top"] .frame,
+.section[data-divider="both"] .frame {
+  border-top: 1px solid
+    var(--records-section-hairline, rgba(245, 242, 235, 0.18));
+}
+
+.section[data-divider="bottom"] .frame,
+.section[data-divider="both"] .frame {
+  border-bottom: 1px solid
+    var(--records-section-hairline, rgba(245, 242, 235, 0.18));
+}
+
+.section[data-accent="true"] .frame::before {
+  position: absolute;
+  top: 0;
+  left: var(--records-section-gutter, clamp(25px, 7vw, 110px));
+  width: 68px;
+  height: 1px;
+  background: var(--records-section-water, #2d9cdb);
+  content: "";
+}
+
+.section[data-width="full"][data-accent="true"] .frame::before {
+  left: 0;
+}
+
+@media (max-width: 720px) {
+  .section[data-rhythm="compact"] .frame {
+    padding-block: 25px;
+  }
+
+  .section[data-rhythm="standard"] .frame {
+    padding-block: 42px;
+  }
+
+  .section[data-rhythm="ceremonial"] .frame {
+    padding-block: 68px;
+  }
+}

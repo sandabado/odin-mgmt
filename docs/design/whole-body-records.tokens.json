@@ -1,0 +1,63 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "color": {
+    "field": {
+      "obsidian": { "$type": "color", "$value": "#050807" },
+      "ink": { "$type": "color", "$value": "#10211d" },
+      "cream": { "$type": "color", "$value": "#f0dfb6" }
+    },
+    "current": {
+      "malachite": { "$type": "color", "$value": "#235f50" },
+      "cyan": { "$type": "color", "$value": "#36f1d0" },
+      "royalPurple": { "$type": "color", "$value": "#5b2a86" },
+      "deepViolet": { "$type": "color", "$value": "#3b2a72" },
+      "alizarin": { "$type": "color", "$value": "#a84f57" },
+      "coral": { "$type": "color", "$value": "#b85863" },
+      "oxidizedGold": { "$type": "color", "$value": "#d9ad56" }
+    }
+  },
+  "space": {
+    "1": { "$type": "dimension", "$value": "8px" },
+    "2": { "$type": "dimension", "$value": "16px" },
+    "3": { "$type": "dimension", "$value": "25px" },
+    "4": { "$type": "dimension", "$value": "42px" },
+    "5": { "$type": "dimension", "$value": "68px" },
+    "6": { "$type": "dimension", "$value": "110px" },
+    "7": { "$type": "dimension", "$value": "179px" },
+    "8": { "$type": "dimension", "$value": "290px" }
+  },
+  "radius": {
+    "ripple": { "$type": "dimension", "$value": "16px" },
+    "pool": { "$type": "dimension", "$value": "25px" },
+    "current": { "$type": "dimension", "$value": "42px" },
+    "basin": { "$type": "dimension", "$value": "68px" },
+    "droplet": { "$type": "dimension", "$value": "999px" }
+  },
+  "motion": {
+    "duration": {
+      "settle": { "$type": "duration", "$value": "420ms" },
+      "reveal": { "$type": "duration", "$value": "800ms" },
+      "breathe": { "$type": "duration", "$value": "30000ms" }
+    },
+    "easing": {
+      "weighted": {
+        "$type": "cubicBezier",
+        "$value": [0.22, 1, 0.36, 1]
+      }
+    }
+  },
+  "typography": {
+    "display": {
+      "$type": "fontFamily",
+      "$value": ["Cinzel", "Trajan Pro", "Iowan Old Style", "Georgia", "serif"]
+    },
+    "body": {
+      "$type": "fontFamily",
+      "$value": ["Iowan Old Style", "Palatino Linotype", "Georgia", "serif"]
+    },
+    "metadata": {
+      "$type": "fontFamily",
+      "$value": ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"]
+    }
+  }
+}

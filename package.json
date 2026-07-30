@@ -7,7 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:types": "tsc --noEmit",
+    "test:merge-integrity": "vitest run src/lib/merge-integrity.test.ts src/lib/intake-security.test.ts",
+    "test:watercanvas-integration": "vitest run src/lib/merge-integrity.test.ts -t \"loads raw WebGL|keeps the water layer\"",
+    "test:audio-sync": "vitest run src/lib/merge-integrity.test.ts -t \"ambient audio\""
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",
@@ -21,7 +25,7 @@
     "framer-motion": "^12.42.2",
     "lucide-react": "^1.25.0",
     "nanoid": "^6.0.0",
-    "next": "15.5.20",
+    "next": "^15.5.22",
     "react": "19.1.1",
     "react-dom": "19.1.1",
     "react-hook-form": "^7.81.0",
@@ -35,11 +39,20 @@
     "@types/react-dom": "19.1.9",
     "autoprefixer": "^10.5.4",
     "eslint": "^9.39.5",
-    "eslint-config-next": "15.5.20",
+    "eslint-config-next": "^15.5.22",
     "postcss": "^8.5.19",
     "prettier": "^3.9.5",
     "tailwindcss": "3.4.17",
     "typescript": "5.9.2",
     "vitest": "^4.1.10"
+  },
+  "overrides": {
+    "archiver": {
+      "brace-expansion": "5.0.8"
+    },
+    "next": {
+      "postcss": "8.5.24",
+      "sharp": "0.35.3"
+    }
   }
 }
