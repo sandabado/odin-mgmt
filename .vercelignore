@@ -1,13 +1,13 @@
-.git
-.next
-.env*
-node_modules
+/.git/
+/.next/
+/.env*
+/node_modules/
 *.tsbuildinfo
 *.DS_Store
 CHANGELOG.md
-docs
-scripts
-supabase
+/docs/
+/scripts/
+/supabase/
 private/foundation/build-phase-turntables
 
 # Superseded or review-only public artwork must not become addressable assets.
