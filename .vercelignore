@@ -1,0 +1,22 @@
+/.git/
+/.next/
+/.env*
+/node_modules/
+*.tsbuildinfo
+*.DS_Store
+CHANGELOG.md
+/docs/
+/scripts/
+/supabase/
+private/foundation/build-phase-turntables
+
+# Superseded or review-only public artwork must not become addressable assets.
+public/images/artists/palo-xanto/palo-xanto-portrait-800x500.png
+public/images/artists/sandabado/giant-rock/
+public/images/backgrounds/wbr-monochrome-watercolor-world-v1.png
+public/images/store/sandabado/desert-signal-sticker-art-v1.png
+public/images/store/sandabado/infinity-love-cd-cover-v1.png
+public/images/store/sandabado/infinity-love-cd-face-v1.png
+public/images/store/sandabado/infinity-love-pioneertown-sawtooth-v1.png
+public/whole-body-records-social-ink-water.png
+public/whole-body-records-social.png

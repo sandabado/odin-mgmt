@@ -1,0 +1,160 @@
+.field {
+  --record-water-black: #0a0a09;
+  --record-water-depth: #10100f;
+  --record-water-blue: #2d9cdb;
+  --record-water-bone: #f5f2eb;
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  background: var(--record-water-black);
+  contain: layout paint;
+  isolation: isolate;
+  pointer-events: none;
+}
+
+.fallback,
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.fallback {
+  z-index: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      ellipse at 24% 18%,
+      rgba(45, 156, 219, 0.18),
+      transparent 46%
+    ),
+    radial-gradient(
+      ellipse at 78% 74%,
+      rgba(245, 242, 235, 0.08),
+      transparent 40%
+    ),
+    linear-gradient(
+      152deg,
+      var(--record-water-black) 8%,
+      var(--record-water-depth) 52%,
+      var(--record-water-black) 100%
+    );
+  opacity: 1;
+  transition: opacity 1.1s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.fallback::before,
+.fallback::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+}
+
+.fallback::before {
+  background: repeating-radial-gradient(
+    ellipse at 38% 44%,
+    rgba(245, 242, 235, 0.08) 0 1px,
+    transparent 2px 20px
+  );
+  mask-image: linear-gradient(
+    120deg,
+    transparent 8%,
+    #000 42%,
+    transparent 88%
+  );
+  opacity: 0.32;
+}
+
+.fallback::after {
+  background: linear-gradient(
+    180deg,
+    rgba(10, 10, 9, 0.12),
+    transparent 38%,
+    rgba(10, 10, 9, 0.52)
+  );
+}
+
+.current {
+  position: absolute;
+  top: 48%;
+  right: -18%;
+  left: -18%;
+  display: block;
+  height: 46%;
+  border-radius: 50%;
+  background: repeating-radial-gradient(
+    ellipse at 52% 4%,
+    transparent 0 22px,
+    rgba(45, 156, 219, 0.2) 23px 24px,
+    rgba(245, 242, 235, 0.05) 25px,
+    transparent 27px 44px
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 12%,
+    #000 88%,
+    transparent
+  );
+  opacity: 0.68;
+  transform: translate3d(-1.5%, 0, 0) rotate(-1.5deg);
+  animation: record-player-current 18s cubic-bezier(0.25, 0.1, 0.25, 1) infinite
+    alternate;
+}
+
+.surface {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: block;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--record-water-bone),
+    var(--record-water-blue),
+    transparent
+  );
+  opacity: 0.34;
+}
+
+.canvas {
+  z-index: 1;
+  display: block;
+  opacity: 0;
+  transition: opacity 1.1s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.field[data-water-state="ready"] .canvas {
+  opacity: 0.78;
+}
+
+.field[data-water-state="ready"] .fallback {
+  opacity: 0.24;
+}
+
+.field[data-water-state="loading"] .fallback {
+  opacity: 0.86;
+}
+
+@keyframes record-player-current {
+  to {
+    transform: translate3d(1.5%, -3%, 0) rotate(1deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fallback,
+  .canvas {
+    transition: none;
+  }
+
+  .current {
+    animation: none;
+    transform: none;
+  }
+}

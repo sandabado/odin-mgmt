@@ -1,0 +1,1386 @@
+/*
+ * Whole Body Records — Ink on Water production law
+ *
+ * This final, route-scoped layer deliberately sits after the historical
+ * stylesheet. It gives every public Records room one visual constitution
+ * without changing ØDIN admin, artist, or Foundation workspaces.
+ */
+
+:root {
+  --wbr-void: #090a0a;
+  --wbr-void-raised: #10100f;
+  --wbr-ink: #f5f2eb;
+  --wbr-ink-soft: #aaa69f;
+  --wbr-paper: #eeeae2;
+  --wbr-water: #2d9cdb;
+  --wbr-water-soft: rgba(45, 156, 219, 0.18);
+  --wbr-media-rest-filter: grayscale(1) brightness(1.18) contrast(0.94);
+  --wbr-media-rest-veil: rgba(45, 156, 219, 0.72);
+  --wbr-content-max: 1440px;
+  --wbr-inset-max: 1120px;
+  --wbr-reading-measure: 760px;
+  --wbr-gutter: clamp(25px, 7vw, 110px);
+  --wbr-touch: 44px;
+  --wbr-section-y-compact: 42px;
+  --wbr-section-y-standard: 68px;
+  --wbr-section-y-ceremonial: 110px;
+  --wbr-line: rgba(245, 242, 235, 0.18);
+  --wbr-line-dark: rgba(9, 10, 10, 0.18);
+  --wbr-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.records-site {
+  --records-aqua: var(--wbr-water);
+  --records-cyan: var(--wbr-water);
+  --records-coral: var(--wbr-ink-soft);
+  --records-gold: var(--wbr-ink);
+  --records-violet: var(--wbr-water);
+  --records-ink: var(--wbr-ink);
+  --records-paper: var(--wbr-void);
+  --records-deep: var(--wbr-void);
+  min-height: 100vh;
+  background: var(--wbr-void) !important;
+  color: var(--wbr-ink);
+  font-family: var(--font-records-body), "Schibsted Grotesk", sans-serif;
+  isolation: isolate;
+}
+
+.records-site ::selection {
+  background: var(--wbr-water);
+  color: var(--wbr-void);
+}
+
+.records-site :is(h1, h2, h3, h4, h5, h6) {
+  color: inherit;
+  font-family: var(--font-records-display), Fraunces, serif !important;
+  font-optical-sizing: auto;
+}
+
+.records-site :is(p, li, dd, dt) {
+  line-height: 1.8;
+}
+
+.records-site :is(a, button, input, textarea, select) {
+  font-family: var(--font-records-body), "Schibsted Grotesk", sans-serif;
+}
+
+.records-site :is(a, button) {
+  transition-duration: 680ms;
+  transition-timing-function: var(--wbr-ease);
+}
+
+.records-site :focus-visible {
+  outline: 1px solid var(--wbr-water) !important;
+  outline-offset: 5px;
+}
+
+/* The substrate is monochrome. The one living color is the Studios current. */
+.records-continuous-flow,
+.records-continuous-flow[data-records-route] {
+  background:
+    radial-gradient(
+      circle at 76% 8%,
+      rgba(245, 242, 235, 0.045),
+      transparent 26%
+    ),
+    linear-gradient(
+      180deg,
+      var(--wbr-void-raised),
+      var(--wbr-void) 44%,
+      #050606
+    ) !important;
+}
+
+.records-continuous-flow::before {
+  background:
+    radial-gradient(
+      ellipse at 72% 5%,
+      rgba(45, 156, 219, 0.1),
+      transparent 28%
+    ),
+    radial-gradient(
+      ellipse at 22% 32%,
+      rgba(245, 242, 235, 0.035),
+      transparent 25%
+    ),
+    linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.2)) !important;
+  opacity: 1 !important;
+}
+
+.records-continuous-flow::after {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.32'/%3E%3C/svg%3E") !important;
+  mix-blend-mode: screen;
+  opacity: 0.025 !important;
+}
+
+/* Shared navigation: thin, precise, and usable at every breakpoint. */
+.records-site > .records-header,
+.records-site .records-header {
+  z-index: 50;
+  min-height: 88px;
+  border-bottom: 1px solid var(--wbr-line) !important;
+  background: rgba(9, 10, 10, 0.9) !important;
+  color: var(--wbr-ink) !important;
+  backdrop-filter: blur(18px) saturate(0.5);
+}
+
+.records-site .records-header--overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(9, 10, 10, 0.92),
+    transparent
+  ) !important;
+}
+
+.records-site .records-wordmark {
+  color: var(--wbr-ink) !important;
+}
+
+.records-brand-flow-mark {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 0 14px rgba(45, 156, 219, 0.12));
+}
+
+.records-brand-flow-mark .records-flow-mark__field {
+  fill: var(--wbr-void);
+}
+
+.records-brand-flow-mark .records-flow-mark__current--one,
+.records-brand-flow-mark .records-flow-mark__dot--two {
+  fill: var(--wbr-water);
+}
+
+.records-brand-flow-mark .records-flow-mark__current--two,
+.records-brand-flow-mark .records-flow-mark__dot--one {
+  fill: var(--wbr-ink);
+}
+
+.records-brand-flow-mark .records-flow-mark__ring {
+  stroke: rgba(245, 242, 235, 0.66);
+}
+
+.records-site .records-wordmark__flow :is(.records-flow-mark__field) {
+  fill: var(--wbr-void) !important;
+}
+
+.records-site .records-wordmark__flow .records-flow-mark__current--one,
+.records-site .records-wordmark__flow .records-flow-mark__dot--two {
+  fill: var(--wbr-water) !important;
+}
+
+.records-site .records-wordmark__flow .records-flow-mark__current--two,
+.records-site .records-wordmark__flow .records-flow-mark__dot--one {
+  fill: var(--wbr-ink) !important;
+}
+
+.records-site .records-wordmark__flow .records-flow-mark__ring {
+  stroke: rgba(245, 242, 235, 0.66) !important;
+}
+
+.records-site .records-header nav a,
+.records-site
+  :is(.records-store-link, .records-cart-link, .records-session-control) {
+  min-height: 44px;
+  border: 0 !important;
+  border-bottom: 1px solid transparent !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: rgba(245, 242, 235, 0.72) !important;
+}
+
+.records-site .records-header nav a:hover,
+.records-site .records-header nav a:focus-visible,
+.records-site .records-header nav a[aria-current="page"],
+.records-site
+  :is(.records-store-link, .records-cart-link, .records-session-control):hover,
+.records-site
+  :is(
+    .records-store-link,
+    .records-cart-link,
+    .records-session-control
+  ):focus-visible,
+.records-site
+  :is(
+    .records-store-link,
+    .records-cart-link,
+    .records-session-control
+  )[aria-current="page"] {
+  border-bottom-color: var(--wbr-water) !important;
+  color: var(--wbr-water) !important;
+  box-shadow: none !important;
+}
+
+.records-site .records-cart-link__count,
+.records-site .records-session-control--member > span {
+  border: 1px solid rgba(45, 156, 219, 0.55) !important;
+  background: transparent !important;
+  color: var(--wbr-water) !important;
+}
+
+/* Shared terrain hero. The river exists on load and responds to intent. */
+.records-site .museum-page-hero--terrain {
+  --mountain-shift-x: 0px;
+  --mountain-shift-y: 0px;
+  position: relative;
+  display: flex;
+  min-height: min(820px, calc(100svh - 88px));
+  align-items: center;
+  overflow: hidden;
+  border-bottom: 1px solid var(--wbr-line) !important;
+  background: var(--wbr-void) !important;
+  isolation: isolate;
+  outline: 0;
+}
+
+.records-site .museum-page-hero__veil {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(7, 8, 8, 0.96) 0%,
+      rgba(7, 8, 8, 0.75) 39%,
+      rgba(7, 8, 8, 0.18) 72%,
+      rgba(7, 8, 8, 0.12)
+    ),
+    linear-gradient(180deg, rgba(9, 10, 10, 0.16), rgba(9, 10, 10, 0.52));
+  pointer-events: none;
+}
+
+.records-site .museum-page-hero__copy {
+  position: relative;
+  z-index: 3;
+  width: min(720px, 100%);
+}
+
+.records-site .museum-page-hero--terrain :is(h1, p) {
+  position: relative;
+  z-index: 3;
+}
+
+.records-site .museum-page-hero--terrain h1 {
+  margin: 24px 0 34px;
+  color: var(--wbr-ink) !important;
+  font-size: clamp(4rem, 8vw, 9rem) !important;
+  font-weight: 650 !important;
+  letter-spacing: -0.055em !important;
+  line-height: 0.86 !important;
+}
+
+.records-site .museum-page-hero--terrain h1 em {
+  color: #d4d0c8 !important;
+  font-weight: 400;
+}
+
+.records-site
+  .museum-page-hero--terrain
+  .museum-page-hero__copy
+  > p:last-child {
+  width: min(520px, 100%);
+  border-left: 1px solid var(--wbr-water);
+  padding-left: 24px;
+  color: rgba(245, 242, 235, 0.68) !important;
+}
+
+.records-site .museum-page-hero__source {
+  position: absolute;
+  z-index: 4;
+  right: clamp(25px, 6vw, 90px);
+  bottom: 42px;
+  display: grid;
+  width: 92px;
+  min-height: 92px;
+  place-items: center;
+  border: 0 !important;
+  border-radius: 50% !important;
+  background: rgba(9, 10, 10, 0.54) !important;
+  color: var(--wbr-ink) !important;
+  cursor: pointer;
+  gap: 6px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.records-site .museum-page-hero__source svg {
+  width: 50px;
+  height: 50px;
+}
+
+.records-site .museum-page-hero__source span {
+  font-size: 9px;
+}
+
+.records-site .museum-page-hero__source .records-flow-mark__field {
+  fill: var(--wbr-void);
+}
+
+.records-site .museum-page-hero__source .records-flow-mark__current--one,
+.records-site .museum-page-hero__source .records-flow-mark__dot--two {
+  fill: var(--wbr-water);
+}
+
+.records-site .museum-page-hero__source .records-flow-mark__current--two,
+.records-site .museum-page-hero__source .records-flow-mark__dot--one {
+  fill: var(--wbr-ink);
+}
+
+.records-site .museum-page-hero__source .records-flow-mark__ring {
+  stroke: rgba(245, 242, 235, 0.5);
+}
+
+.records-site .museum-page-hero__source:hover,
+.records-site .museum-page-hero__source:focus-visible {
+  box-shadow:
+    0 0 0 1px var(--wbr-water),
+    0 0 54px var(--wbr-water-soft) !important;
+}
+
+/* Editorial rooms: remove wellness-card chrome and restore hierarchy. */
+.records-site main > :is(section, article),
+.records-site
+  :is(
+    .museum-featured,
+    .museum-collection,
+    .museum-artist-profile,
+    .museum-studio,
+    .museum-tour-room,
+    .museum-tour-signage,
+    .museum-release-detail,
+    .records-services-intro,
+    .records-service-chapter,
+    .records-services-empty,
+    .records-services-closing,
+    .records-store-collection,
+    .records-store-categories,
+    .records-cart-experience,
+    .records-cart-empty,
+    .museum-catalog-boundary
+  ) {
+  border-color: var(--wbr-line) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.records-site
+  :is(
+    .museum-featured,
+    .museum-collection,
+    .museum-studio,
+    .museum-tour-room,
+    .museum-tour-signage,
+    .museum-release-detail,
+    .records-services-intro,
+    .records-service-chapter,
+    .records-services-empty,
+    .records-services-closing,
+    .records-store-collection,
+    .records-cart-experience,
+    .records-cart-empty,
+    .museum-catalog-boundary
+  ) {
+  background: rgba(9, 10, 10, 0.78) !important;
+  color: var(--wbr-ink) !important;
+}
+
+.records-site :is(.records-index, .records-kicker) {
+  color: var(--wbr-water) !important;
+}
+
+.records-site :is(h1, h2, h3) em {
+  color: #d4d0c8 !important;
+}
+
+.records-site
+  :is(
+    .museum-artist-profile__copy,
+    .museum-room-heading,
+    .museum-release-detail,
+    .records-service-chapter__copy,
+    .records-store-collection__heading,
+    .records-cart-summary,
+    .records-submit__copy
+  )
+  > p:not(.records-index):not(.records-kicker) {
+  color: rgba(245, 242, 235, 0.66) !important;
+}
+
+.records-site
+  :is(
+    .museum-empty-plaque,
+    .museum-release-tracklist li,
+    .museum-release-credits,
+    .records-store-categories article,
+    .records-cart-summary,
+    .records-auth__form-frame
+  ) {
+  border-color: var(--wbr-line) !important;
+  border-radius: 0 !important;
+  background: rgba(245, 242, 235, 0.025) !important;
+  color: var(--wbr-ink) !important;
+  box-shadow: none !important;
+}
+
+.records-site :is(.records-catalog-link, .museum-link-row a) {
+  border-bottom-color: rgba(45, 156, 219, 0.5) !important;
+  color: var(--wbr-water) !important;
+}
+
+.records-site .records-button,
+.records-site .records-auth__submit,
+.records-site .records-store-product__copy button,
+.records-site .records-cart-summary > button {
+  min-height: 48px;
+  border: 1px solid var(--wbr-water) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--wbr-water) !important;
+  box-shadow: none !important;
+}
+
+.records-site .records-button:hover,
+.records-site .records-button:focus-visible,
+.records-site .records-auth__submit:hover,
+.records-site .records-auth__submit:focus-visible,
+.records-site .records-store-product__copy button:hover,
+.records-site .records-store-product__copy button:focus-visible {
+  background: var(--wbr-water) !important;
+  color: var(--wbr-void) !important;
+}
+
+/* Square media, blue veil at rest, honest artist color on interaction. */
+.records-site
+  :is(
+    .museum-album-frame,
+    .museum-artist-profile__image,
+    .museum-track-frame__canvas,
+    .records-store-product__image,
+    .records-cart-lines__image
+  ) {
+  position: relative;
+  min-height: 0 !important;
+  aspect-ratio: 1 / 1 !important;
+  overflow: hidden;
+  border: 1px solid var(--wbr-line) !important;
+  border-radius: 0 !important;
+  background: var(--wbr-void-raised) !important;
+}
+
+.records-site
+  :is(
+    .museum-album-frame,
+    .museum-artist-profile__image,
+    .museum-track-frame__canvas,
+    .records-store-product__image,
+    .records-cart-lines__image
+  )::after {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  background: var(--wbr-media-rest-veil);
+  content: "";
+  mix-blend-mode: color;
+  opacity: 1;
+  pointer-events: none;
+  transition: opacity 1100ms var(--wbr-ease);
+}
+
+.records-site
+  :is(
+    .museum-album-frame,
+    .museum-artist-profile__image,
+    .museum-track-frame__canvas,
+    .records-store-product__image,
+    .records-cart-lines__image
+  )
+  img {
+  object-fit: cover !important;
+  filter: var(--wbr-media-rest-filter) !important;
+  transition:
+    filter 1100ms var(--wbr-ease),
+    transform 1600ms var(--wbr-ease) !important;
+}
+
+.records-site
+  :is(
+    .museum-album-frame,
+    .museum-artist-profile__image,
+    .museum-track-frame__canvas,
+    .records-store-product__image,
+    .records-cart-lines__image
+  ):is(:hover, :focus, :focus-within)::after,
+.records-site .records-store-product:hover .records-store-product__image::after,
+.records-site
+  .records-cart-lines
+  article:hover
+  .records-cart-lines__image::after {
+  opacity: 0;
+}
+
+.records-site
+  :is(
+    .museum-album-frame,
+    .museum-artist-profile__image,
+    .museum-track-frame__canvas,
+    .records-store-product__image,
+    .records-cart-lines__image
+  ):is(:hover, :focus, :focus-within)
+  img,
+.records-site .records-store-product:hover .records-store-product__image img,
+.records-site .records-cart-lines article:hover .records-cart-lines__image img {
+  filter: none !important;
+  transform: scale(1.018);
+}
+
+.records-site .museum-track-frame {
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* The catalog player is an instrument, not a rainbow dashboard. */
+.records-site .museum-collection--turntable,
+.records-site .museum-release-player--immersive {
+  border-color: var(--wbr-line) !important;
+  border-radius: 0 !important;
+  background:
+    radial-gradient(
+      ellipse at 18% 18%,
+      rgba(45, 156, 219, 0.09),
+      transparent 34rem
+    ),
+    var(--wbr-void) !important;
+  color: var(--wbr-ink) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+.records-site .museum-collection--turntable::before {
+  background: linear-gradient(
+    112deg,
+    transparent 6%,
+    rgba(45, 156, 219, 0.08) 48%,
+    transparent 92%
+  ) !important;
+  opacity: 0.72 !important;
+}
+
+.records-site .wbr-inline-turntable {
+  --inline-cream: var(--wbr-ink);
+  --inline-cyan: var(--wbr-water);
+  --inline-gold: var(--wbr-water);
+  --inline-purple: var(--wbr-water);
+  color: var(--wbr-ink) !important;
+}
+
+.records-site :is(.wbr-inline-turntable__deck, .wbr-inline-turntable__library) {
+  border-color: var(--wbr-line) !important;
+  border-radius: 0 !important;
+  background: rgba(9, 10, 10, 0.84) !important;
+  box-shadow: none !important;
+}
+
+.records-site
+  :is(.wbr-inline-turntable__deck, .wbr-inline-turntable__library)::after {
+  background: linear-gradient(
+    125deg,
+    rgba(45, 156, 219, 0.065),
+    transparent 52%
+  ) !important;
+}
+
+.records-site .wbr-inline-turntable__platter {
+  border-color: rgba(245, 242, 235, 0.2) !important;
+  background:
+    radial-gradient(circle, #242625 0 6%, #101211 7% 66%, #030404 67%),
+    var(--wbr-void) !important;
+  box-shadow:
+    inset 0 0 80px rgba(0, 0, 0, 0.72),
+    0 28px 70px rgba(0, 0, 0, 0.42) !important;
+}
+
+.records-site .wbr-inline-turntable__platter-ring {
+  border-color: rgba(45, 156, 219, 0.3) !important;
+}
+
+.records-site .wbr-inline-turntable__record img {
+  filter: var(--wbr-media-rest-filter) !important;
+}
+
+.records-site .wbr-inline-turntable__record::before {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--wbr-media-rest-veil);
+  content: "";
+  mix-blend-mode: color;
+  opacity: 1;
+  pointer-events: none;
+  transition: opacity 1100ms var(--wbr-ease);
+}
+
+.records-site .wbr-inline-turntable__record:is(:hover, :focus-within)::before,
+.records-site
+  .wbr-inline-turntable[data-state="playing"]
+  .wbr-inline-turntable__record::before {
+  opacity: 0;
+}
+
+.records-site .wbr-inline-turntable__spindle {
+  background: var(--wbr-water) !important;
+  box-shadow: 0 0 14px rgba(45, 156, 219, 0.5) !important;
+}
+
+.records-site .wbr-inline-turntable__empty-groove {
+  border-color: rgba(45, 156, 219, 0.4) !important;
+  box-shadow:
+    0 0 0 22px rgba(45, 156, 219, 0.06),
+    0 0 46px rgba(45, 156, 219, 0.12) !important;
+}
+
+.records-site .wbr-inline-turntable__tonearm::before {
+  border-color: rgba(245, 242, 235, 0.4) !important;
+  background: #111212 !important;
+}
+
+.records-site .wbr-inline-turntable__tonearm span {
+  background: linear-gradient(90deg, #5b5e5d, #eeeae2, #595c5b) !important;
+}
+
+.records-site .wbr-inline-turntable__tonearm span::after {
+  background: var(--wbr-void) !important;
+  box-shadow: inset 0 -5px var(--wbr-water) !important;
+}
+
+.records-site .wbr-inline-turntable__progress {
+  border-radius: 0 !important;
+  background: var(--wbr-line) !important;
+  color: var(--wbr-water) !important;
+}
+
+.records-site .wbr-inline-turntable__progress::-webkit-progress-value,
+.records-site .wbr-inline-turntable__progress::-moz-progress-bar {
+  border-radius: 0 !important;
+  background: var(--wbr-water) !important;
+}
+
+.records-site
+  :is(
+    .wbr-inline-turntable__controls button,
+    .wbr-inline-turntable__queue button
+  ) {
+  border-color: var(--wbr-line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--wbr-ink) !important;
+  box-shadow: none !important;
+}
+
+.records-site .wbr-inline-turntable__controls .wbr-inline-turntable__play,
+.records-site .wbr-inline-turntable__queue button[aria-current="true"] {
+  border-color: var(--wbr-water) !important;
+  background: rgba(45, 156, 219, 0.1) !important;
+  box-shadow: inset 3px 0 var(--wbr-water) !important;
+}
+
+.records-site .wbr-inline-turntable :where(button):hover:not(:disabled),
+.records-site .wbr-inline-turntable :where(button):focus-visible {
+  border-color: var(--wbr-water) !important;
+  background: rgba(45, 156, 219, 0.1) !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.records-site
+  :is(.wbr-inline-turntable__spotify, .wbr-inline-turntable__error) {
+  border-color: var(--wbr-line) !important;
+  border-radius: 0 !important;
+  background: rgba(245, 242, 235, 0.025) !important;
+  color: var(--wbr-ink) !important;
+}
+
+/* Store and cart remain functional while joining the same visual current. */
+.records-site .records-store-hero {
+  min-height: min(760px, calc(100svh - 88px));
+  border-bottom: 1px solid var(--wbr-line) !important;
+  background: var(--wbr-void) !important;
+}
+
+.records-site .records-store-hero > img {
+  filter: grayscale(1) contrast(1.06) brightness(0.68) !important;
+}
+
+.records-site .records-store-hero__current {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(9, 10, 10, 0.96),
+      rgba(9, 10, 10, 0.46) 54%,
+      transparent
+    ),
+    rgba(45, 156, 219, 0.14) !important;
+  mix-blend-mode: normal !important;
+}
+
+.records-site .records-store-principles {
+  border-color: var(--wbr-line) !important;
+  background: var(--wbr-void-raised) !important;
+  color: rgba(245, 242, 235, 0.62) !important;
+}
+
+.records-site .records-store-filters button {
+  min-height: 44px;
+  border: 0 !important;
+  border-bottom: 1px solid var(--wbr-line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--wbr-ink-soft) !important;
+}
+
+.records-site .records-store-filters button[aria-pressed="true"],
+.records-site .records-store-filters button:hover,
+.records-site .records-store-filters button:focus-visible {
+  border-bottom-color: var(--wbr-water) !important;
+  color: var(--wbr-water) !important;
+}
+
+.records-site .records-store-product {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--wbr-ink) !important;
+  box-shadow: none !important;
+}
+
+.records-site .records-store-product__copy > p:not(.records-index) {
+  color: rgba(245, 242, 235, 0.62) !important;
+}
+
+.records-site .records-cart-lines article {
+  border-color: var(--wbr-line) !important;
+  background: transparent !important;
+  color: var(--wbr-ink) !important;
+}
+
+.records-site
+  :is(
+    .records-cart-quantity button,
+    .records-cart-remove,
+    .records-cart-clear
+  ) {
+  min-width: 44px;
+  min-height: 44px;
+  border-color: var(--wbr-line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--wbr-ink-soft) !important;
+}
+
+/* Forms and member access: same material, stronger focus, no security changes. */
+.records-site :is(.records-submission-form, .records-auth__form) label {
+  color: rgba(245, 242, 235, 0.68) !important;
+}
+
+.records-site
+  :is(
+    .records-submission-form input,
+    .records-submission-form textarea,
+    .records-auth__form input
+  ) {
+  min-height: 48px;
+  border: 0 !important;
+  border-bottom: 1px solid var(--wbr-line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--wbr-ink) !important;
+  box-shadow: none !important;
+}
+
+.records-site
+  :is(
+    .records-submission-form input,
+    .records-submission-form textarea,
+    .records-auth__form input
+  ):focus {
+  border-bottom-color: var(--wbr-water) !important;
+  outline: 0 !important;
+}
+
+.records-auth.records-continuous-flow .records-auth__main {
+  min-height: calc(100svh - 88px) !important;
+  background: var(--wbr-void) !important;
+}
+
+.records-auth.records-continuous-flow
+  :is(.records-auth__threshold, .records-auth__access) {
+  min-height: calc(100svh - 88px) !important;
+  border-color: var(--wbr-line) !important;
+  background: var(--wbr-void) !important;
+  color: var(--wbr-ink) !important;
+}
+
+.records-auth .records-auth__currents span {
+  border-color: rgba(45, 156, 219, 0.22) !important;
+  box-shadow: none !important;
+}
+
+.records-auth .records-auth__mark .records-flow-mark__field {
+  fill: var(--wbr-void);
+}
+
+.records-auth .records-auth__mark .records-flow-mark__current--one,
+.records-auth .records-auth__mark .records-flow-mark__dot--two {
+  fill: var(--wbr-water);
+}
+
+.records-auth .records-auth__mark .records-flow-mark__current--two,
+.records-auth .records-auth__mark .records-flow-mark__dot--one {
+  fill: var(--wbr-ink);
+}
+
+.records-legal-page {
+  background: var(--wbr-void) !important;
+  color: var(--wbr-ink) !important;
+}
+
+.records-legal-page a {
+  color: var(--wbr-water) !important;
+}
+
+/* Legacy flow helpers now speak a single blue language. */
+.records-site .records-water-transition,
+.records-site
+  :is(.records-water-transition--gold, .records-water-transition--violet) {
+  --records-transition-color: var(--wbr-water) !important;
+  background: transparent !important;
+}
+
+.records-site .records-water-transition path {
+  stroke: var(--wbr-water) !important;
+}
+
+.records-site .records-water-transition > span,
+.records-site .records-geometry-divider {
+  color: var(--wbr-water) !important;
+}
+
+.records-site .records-geometry-divider {
+  width: 100%;
+  margin: 0 !important;
+  padding-inline: clamp(25px, 7vw, 110px);
+  background: var(--wbr-void) !important;
+}
+
+@media (max-width: 980px) {
+  .records-site .museum-page-hero--terrain {
+    min-height: 720px;
+  }
+
+  .records-site .museum-page-hero__veil {
+    background: linear-gradient(
+      90deg,
+      rgba(7, 8, 8, 0.92),
+      rgba(7, 8, 8, 0.48) 72%,
+      rgba(7, 8, 8, 0.25)
+    );
+  }
+}
+
+@media (max-width: 820px) {
+  .records-site > .records-header,
+  .records-site .records-header {
+    min-height: 74px;
+  }
+
+  .records-site .records-header nav a,
+  .records-site
+    :is(.records-store-link, .records-cart-link, .records-session-control) {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .records-site .museum-page-hero--terrain {
+    min-height: 680px;
+  }
+
+  .records-site .museum-page-hero__source {
+    right: 25px;
+    bottom: 25px;
+    width: 76px;
+    min-height: 76px;
+  }
+
+  .records-site .museum-page-hero__source svg {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 580px) {
+  .records-site .museum-page-hero--terrain {
+    min-height: 620px;
+  }
+
+  .records-site .museum-page-hero--terrain h1 {
+    font-size: clamp(3.4rem, 17vw, 5.8rem) !important;
+  }
+
+  .records-site .museum-page-hero__copy {
+    padding-bottom: 94px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .records-site *,
+  .records-site *::before,
+  .records-site *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/*
+ * Floating public masthead
+ *
+ * This final override intentionally sits after the historical navigation
+ * layers above. The masthead is a light, fixed current over the artwork—not
+ * a separate page slab—and the native details menu keeps all five primary
+ * rooms keyboard-accessible on compact screens.
+ */
+.records-site {
+  --records-floating-header-height: 78px;
+}
+
+.records-site > .records-header,
+.records-site .records-header {
+  position: fixed !important;
+  z-index: 90 !important;
+  top: 0 !important;
+  right: 0 !important;
+  left: 0 !important;
+  display: grid;
+  width: 100% !important;
+  min-height: var(--records-floating-header-height) !important;
+  margin: 0 !important;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(18px, 3vw, 48px);
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 10px clamp(22px, 4vw, 58px) !important;
+  background: linear-gradient(
+    180deg,
+    rgba(6, 7, 7, 0.84) 0%,
+    rgba(6, 7, 7, 0.48) 62%,
+    rgba(6, 7, 7, 0) 100%
+  ) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  color: var(--wbr-ink) !important;
+  isolation: isolate;
+  pointer-events: none;
+}
+
+.records-site .records-header > * {
+  pointer-events: auto;
+}
+
+.records-site .records-header__primary-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(18px, 2vw, 31px);
+}
+
+.records-site .records-header nav a {
+  position: relative;
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  border: 0 !important;
+  color: rgba(245, 242, 235, 0.74) !important;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.17em;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.78);
+  text-transform: uppercase;
+}
+
+.records-site .records-header nav a::after {
+  position: absolute;
+  right: 0;
+  bottom: 7px;
+  left: 0;
+  height: 1px;
+  background: var(--wbr-water) !important;
+  content: "";
+  opacity: 0;
+  transform: scaleX(0.18);
+  transform-origin: left;
+  transition:
+    opacity 680ms var(--wbr-ease),
+    transform 680ms var(--wbr-ease);
+}
+
+.records-site .records-header nav a:hover,
+.records-site .records-header nav a:focus-visible,
+.records-site .records-header nav a[aria-current="page"] {
+  color: var(--wbr-ink) !important;
+}
+
+.records-site .records-header nav a:hover::after,
+.records-site .records-header nav a:focus-visible::after,
+.records-site .records-header nav a[aria-current="page"]::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.records-site .records-wordmark {
+  display: inline-flex;
+  min-height: 52px;
+  align-items: center;
+  color: var(--wbr-ink) !important;
+}
+
+.records-wordmark-lockup {
+  --records-wordmark-mark: 48px;
+  --records-wordmark-display: clamp(1.8rem, 3vw, 2.6rem);
+  --records-wordmark-eyebrow: 0.58rem;
+  --records-wordmark-current: 31px;
+  display: inline-flex !important;
+  width: max-content !important;
+  height: auto !important;
+  align-items: center;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--wbr-ink);
+  gap: 13px;
+  line-height: 1;
+  overflow: visible !important;
+}
+
+.records-wordmark-lockup--on-bone {
+  color: var(--wbr-void);
+}
+
+.records-wordmark-lockup[data-size="compact"] {
+  --records-wordmark-mark: 40px;
+  --records-wordmark-display: clamp(1.45rem, 2vw, 1.78rem);
+  --records-wordmark-eyebrow: 0.47rem;
+  --records-wordmark-current: 25px;
+}
+
+.records-wordmark-lockup[data-size="display"] {
+  --records-wordmark-mark: 68px;
+  --records-wordmark-display: clamp(2.7rem, 6vw, 5.5rem);
+  --records-wordmark-eyebrow: 0.68rem;
+  --records-wordmark-current: 42px;
+  gap: 16px;
+}
+
+.records-wordmark-lockup__mark {
+  display: grid;
+  width: var(--records-wordmark-mark);
+  height: var(--records-wordmark-mark);
+  flex: 0 0 var(--records-wordmark-mark);
+  place-items: center;
+}
+
+.records-wordmark-lockup__copy {
+  display: grid;
+  gap: 1px;
+}
+
+.records-wordmark-lockup__eyebrow {
+  font-family: var(--font-records-body), "Schibsted Grotesk", sans-serif;
+  font-size: var(--records-wordmark-eyebrow);
+  font-weight: 580;
+  letter-spacing: 0.22em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.records-wordmark-lockup__title {
+  font-family: var(--font-records-display), Fraunces, serif;
+  font-optical-sizing: auto;
+  font-size: var(--records-wordmark-display);
+  font-weight: 680;
+  letter-spacing: -0.055em;
+  line-height: 0.9;
+}
+
+.records-wordmark-lockup__current {
+  position: relative;
+  width: var(--records-wordmark-current);
+  height: 1px;
+  margin-top: 5px;
+  background: var(--wbr-water);
+  transform-origin: left;
+  transition: width 680ms var(--wbr-ease);
+}
+
+.records-wordmark-lockup__current::after {
+  position: absolute;
+  top: -1.5px;
+  right: -2px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--wbr-water);
+  content: "";
+}
+
+.records-wordmark:hover .records-wordmark-lockup__current,
+.records-wordmark:focus-visible .records-wordmark-lockup__current {
+  width: min(72px, 76%);
+}
+
+.records-site .records-header__utilities {
+  display: flex;
+  min-width: max-content;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.records-site
+  .records-header__utilities
+  :is(.records-store-link, .records-cart-link, .records-session-control) {
+  min-width: 44px;
+  min-height: 44px;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: rgba(245, 242, 235, 0.74) !important;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.78);
+}
+
+.records-site
+  .records-header__utilities
+  :is(.records-store-link, .records-cart-link, .records-session-control):hover,
+.records-site
+  .records-header__utilities
+  :is(
+    .records-store-link,
+    .records-cart-link,
+    .records-session-control
+  ):focus-visible,
+.records-site
+  .records-header__utilities
+  :is(
+    .records-store-link,
+    .records-cart-link,
+    .records-session-control
+  )[aria-current="page"] {
+  border: 0 !important;
+  color: var(--wbr-water) !important;
+  transform: translateY(-1px);
+}
+
+.records-mobile-nav {
+  position: relative;
+  display: none;
+}
+
+.records-mobile-nav > summary {
+  display: inline-flex;
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: rgba(245, 242, 235, 0.78);
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  list-style: none;
+  text-transform: uppercase;
+}
+
+.records-mobile-nav > summary::-webkit-details-marker {
+  display: none;
+}
+
+.records-mobile-nav__glyph {
+  display: grid;
+  width: 18px;
+  gap: 5px;
+}
+
+.records-mobile-nav__glyph i {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform-origin: center;
+  transition: transform 680ms var(--wbr-ease);
+}
+
+.records-mobile-nav[open] .records-mobile-nav__glyph i:first-child {
+  transform: translateY(3px) rotate(45deg);
+}
+
+.records-mobile-nav[open] .records-mobile-nav__glyph i:last-child {
+  transform: translateY(-3px) rotate(-45deg);
+}
+
+.records-site .records-header .records-mobile-nav > nav {
+  position: absolute;
+  top: calc(100% + 7px);
+  right: 0;
+  display: grid !important;
+  width: min(320px, calc(100vw - 28px)) !important;
+  grid-column: auto !important;
+  grid-row: auto !important;
+  gap: 0 !important;
+  overflow: visible !important;
+  border-top: 1px solid var(--wbr-water);
+  border-radius: 0 0 16px 16px !important;
+  padding: 8px 18px 15px;
+  background: rgba(7, 8, 8, 0.97);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.34);
+}
+
+.records-site .records-header .records-mobile-nav > nav a {
+  min-height: 48px !important;
+  border-bottom: 1px solid rgba(245, 242, 235, 0.11) !important;
+}
+
+.records-site :is(#records-main, #ink-main, #member-access, [id]) {
+  scroll-margin-top: calc(var(--records-floating-header-height) + 18px);
+}
+
+.records-site > a[href="#records-main"],
+.records-site > a[href="#ink-main"],
+.records-site > a[href="#member-access"] {
+  z-index: 120 !important;
+}
+
+.records-site[data-records-route="home"] > main > section:first-child {
+  padding-top: max(68px, calc(var(--records-floating-header-height) + 24px));
+}
+
+.records-site .records-legal-page {
+  padding-top: calc(var(--records-floating-header-height) + 68px) !important;
+}
+
+.records-auth.records-continuous-flow .records-auth__main {
+  padding-top: var(--records-floating-header-height) !important;
+}
+
+@media (max-width: 920px) {
+  .records-site {
+    --records-floating-header-height: 72px;
+  }
+
+  .records-site > .records-header,
+  .records-site .records-header {
+    min-height: var(--records-floating-header-height) !important;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+    padding: 8px 16px !important;
+  }
+
+  .records-site .records-header > .records-header__primary-nav {
+    display: none !important;
+  }
+
+  .records-site .records-header__utilities {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .records-site .records-mobile-nav {
+    display: block;
+  }
+
+  .records-wordmark-lockup[data-size="compact"] {
+    --records-wordmark-mark: 36px;
+    --records-wordmark-display: 1.38rem;
+    --records-wordmark-eyebrow: 0.42rem;
+    --records-wordmark-current: 21px;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 580px) {
+  .records-site > .records-header,
+  .records-site .records-header {
+    padding-inline: 12px !important;
+  }
+
+  .records-site .records-header__utilities {
+    gap: 1px;
+  }
+
+  .records-site
+    .records-header__utilities
+    :is(.records-store-link, .records-cart-link, .records-session-control) {
+    min-width: 44px;
+    min-height: 44px;
+    padding-inline: 7px;
+  }
+
+  .records-mobile-nav__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .records-site[data-records-route="home"] > main > section:first-child {
+    padding-top: calc(var(--records-floating-header-height) + 40px);
+  }
+
+  .records-site .records-legal-page {
+    padding-top: calc(var(--records-floating-header-height) + 42px) !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .records-site > .records-header,
+  .records-site .records-header {
+    gap: 4px;
+    padding-inline: 8px !important;
+  }
+
+  .records-wordmark-lockup[data-size="compact"] {
+    --records-wordmark-mark: 30px;
+    --records-wordmark-display: 1.12rem;
+    --records-wordmark-eyebrow: 0.35rem;
+    --records-wordmark-current: 18px;
+    gap: 7px;
+  }
+
+  .records-site .records-header__utilities {
+    gap: 0;
+  }
+
+  .records-site
+    .records-header__utilities
+    :is(.records-store-link, .records-cart-link, .records-session-control) {
+    min-width: 44px;
+    padding-inline: 4px;
+  }
+
+  .records-site .records-header__utilities .records-store-link {
+    font-size: 9px;
+    letter-spacing: 0.08em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .records-wordmark-lockup__current,
+  .records-mobile-nav__glyph i,
+  .records-site .records-header nav a::after {
+    transition: none !important;
+  }
+}

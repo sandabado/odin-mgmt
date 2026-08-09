@@ -1,0 +1,102 @@
+.root {
+  min-width: 0;
+}
+
+.rail {
+  --records-rail-item: 19rem;
+
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(100%, var(--records-rail-item)), 1fr)
+  );
+  gap: clamp(16px, 2vw, 25px);
+  outline: none;
+}
+
+.cue {
+  display: none;
+}
+
+.rail[data-item-width="compact"] {
+  --records-rail-item: 15rem;
+}
+
+.rail[data-item-width="wide"] {
+  --records-rail-item: 25rem;
+}
+
+.rail:focus-visible {
+  outline: 1px solid var(--records-section-water, #2d9cdb);
+  outline-offset: 8px;
+}
+
+@media (max-width: 760px) {
+  .rail {
+    width: calc(100% + var(--records-section-gutter, 16px));
+    grid-auto-flow: column;
+    grid-auto-columns: min(
+      var(--records-rail-item),
+      calc(100vw - 2 * var(--records-section-gutter, 16px))
+    );
+    grid-template-columns: none;
+    padding: 8px var(--records-section-gutter, 16px) 16px 0;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: inline proximity;
+    scrollbar-color: var(--records-section-water, #2d9cdb) transparent;
+    scrollbar-width: thin;
+  }
+
+  .rail > * {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  .cue[data-breakpoint="mobile"] {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 16px 0 0;
+    color: var(--records-section-muted, #aaa69f);
+    font-family:
+      var(--font-records-body), "Schibsted Grotesk", Arial, sans-serif;
+    font-size: 0.66rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  .cueTrack {
+    position: relative;
+    width: 68px;
+    height: 1px;
+    overflow: hidden;
+    background: var(--records-section-hairline, rgba(245, 242, 235, 0.18));
+  }
+
+  .cueTrack > span {
+    display: block;
+    width: 25px;
+    height: 1px;
+    background: var(--records-section-water, #2d9cdb);
+  }
+}
+
+@media (max-width: 620px) {
+  .cue[data-breakpoint="compact"] {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 16px 0 0;
+    color: var(--records-section-muted, #aaa69f);
+    font-family:
+      var(--font-records-body), "Schibsted Grotesk", Arial, sans-serif;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+}

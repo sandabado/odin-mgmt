@@ -1,0 +1,239 @@
+.introduction,
+.current,
+.boundary,
+.actions {
+  width: min(100% - 32px, 1440px);
+  margin: 16px auto;
+  border: 1px solid var(--wbr-line);
+  border-radius: 48px;
+  background: rgba(16, 16, 15, 0.78);
+  box-shadow: 0 34px 100px rgba(0, 0, 0, 0.22);
+  overflow: hidden;
+}
+
+.introduction {
+  display: grid;
+  min-height: 520px;
+  grid-template-columns: minmax(180px, 0.34fr) minmax(0, 1fr);
+  gap: clamp(48px, 9vw, 150px);
+  align-items: center;
+  padding: clamp(68px, 10vw, 150px);
+  background:
+    radial-gradient(
+      circle at 76% 24%,
+      rgba(45, 156, 219, 0.12),
+      transparent 34%
+    ),
+    rgba(16, 16, 15, 0.78);
+}
+
+.introduction h2 {
+  max-width: 980px;
+  margin: 0;
+  font-size: clamp(3.4rem, 7vw, 8.4rem);
+  font-weight: 650;
+  letter-spacing: -0.055em;
+  line-height: 0.88;
+}
+
+.introduction div > p {
+  max-width: 720px;
+  margin: 36px 0 0;
+  color: var(--wbr-ink-soft);
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
+}
+
+.divider {
+  width: min(100% - 64px, 1360px) !important;
+  margin: 32px auto;
+}
+
+.current {
+  padding: clamp(68px, 9vw, 128px) clamp(24px, 6vw, 88px);
+}
+
+.current > p {
+  margin-bottom: 48px;
+}
+
+.current > ol {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--wbr-line);
+  list-style: none;
+}
+
+.current > ol > li {
+  position: relative;
+  min-height: 540px;
+  padding: 46px clamp(24px, 3.4vw, 54px) 54px 0;
+}
+
+.current > ol > li + li {
+  padding-left: clamp(24px, 3.4vw, 54px);
+  border-left: 1px solid var(--wbr-line);
+}
+
+.number {
+  display: block;
+  margin-bottom: clamp(72px, 11vw, 150px);
+  color: var(--wbr-water);
+  font-size: 0.7rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.2em;
+}
+
+.current h2 {
+  max-width: 420px;
+  margin: 18px 0 26px;
+  font-size: clamp(2.2rem, 3.5vw, 4.8rem);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 0.96;
+}
+
+.current > ol > li > p:last-of-type {
+  max-width: 430px;
+  color: var(--wbr-ink-soft);
+}
+
+.current ul,
+.boundary ul {
+  margin: 34px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.current ul li,
+.boundary ul li {
+  position: relative;
+  padding: 14px 0 14px 24px;
+  border-top: 1px solid var(--wbr-line);
+  color: rgba(245, 242, 235, 0.76);
+  font-size: 0.84rem;
+}
+
+.current ul li::before,
+.boundary ul li::before {
+  position: absolute;
+  top: 22px;
+  left: 1px;
+  width: 7px;
+  height: 1px;
+  background: var(--wbr-water);
+  content: "";
+}
+
+.boundary {
+  display: grid;
+  min-height: 620px;
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.7fr);
+  gap: clamp(52px, 9vw, 160px);
+  align-items: center;
+  padding: clamp(68px, 10vw, 150px);
+  background:
+    linear-gradient(115deg, rgba(45, 156, 219, 0.09), transparent 45%), #070808;
+}
+
+.boundary h2 {
+  max-width: 860px;
+  margin: 20px 0 30px;
+  font-size: clamp(3.3rem, 6vw, 7.2rem);
+  font-weight: 650;
+  letter-spacing: -0.055em;
+  line-height: 0.88;
+}
+
+.boundary div > p:last-child {
+  max-width: 700px;
+  color: var(--wbr-ink-soft);
+}
+
+.actions {
+  min-height: 360px;
+  padding: clamp(68px, 9vw, 128px);
+}
+
+.actions > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 38px;
+}
+
+@media (max-width: 920px) {
+  .introduction,
+  .boundary {
+    grid-template-columns: 1fr;
+  }
+
+  .introduction {
+    gap: 36px;
+  }
+
+  .current > ol {
+    grid-template-columns: 1fr;
+  }
+
+  .current > ol > li {
+    min-height: 0;
+    padding: 40px 0 56px;
+  }
+
+  .current > ol > li + li {
+    padding-left: 0;
+    border-top: 1px solid var(--wbr-line);
+    border-left: 0;
+  }
+
+  .number {
+    margin-bottom: 64px;
+  }
+}
+
+@media (max-width: 620px) {
+  .introduction,
+  .current,
+  .boundary,
+  .actions {
+    width: calc(100% - 16px);
+    margin: 8px auto;
+    border-radius: 28px;
+  }
+
+  .introduction,
+  .current,
+  .boundary,
+  .actions {
+    padding: 64px 24px;
+  }
+
+  .introduction h2 {
+    font-size: clamp(3rem, 16vw, 4.8rem);
+  }
+
+  .boundary h2 {
+    font-size: clamp(2.8rem, 14vw, 4.4rem);
+  }
+
+  .actions > div {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .actions a {
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .introduction,
+  .current,
+  .boundary,
+  .actions {
+    scroll-behavior: auto;
+  }
+}

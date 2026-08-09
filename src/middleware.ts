@@ -1,11 +1,20 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
-import { isStaleAuthSession, isSupabaseSessionCookie } from "@/lib/auth/stale-session";
+import {
+  memberDestinationForRole,
+  memberHomeForRole,
+} from "@/lib/auth/member-destination";
+import type { OdinRole } from "@/lib/auth/roles";
+import {
+  isStaleAuthSession,
+  isSupabaseSessionCookie,
+} from "@/lib/auth/stale-session";
 
 const protectedRoutes = [
   "/admin",
   "/artist",
   "/dashboard",
+  "/foundation",
   "/venues",
   "/leads",
   "/contracts",
@@ -19,7 +28,14 @@ const protectedRoutes = [
   "/deals",
 ] as const;
 
-const superAdminRoutes = ["/settings", "/admin/settings"] as const;
+const superAdminRoutes = [
+  "/settings",
+  "/admin/settings",
+  "/admin/foundation",
+  "/admin/guardian",
+  "/admin/expenses",
+  "/admin/playbook",
+] as const;
 const bookingRoutes = [
   "/venues",
   "/leads",
@@ -33,20 +49,18 @@ const bookingRoutes = [
 ] as const;
 
 function matchesRoute(pathname: string, routes: readonly string[]) {
-  return routes.some((route) => pathname === route || pathname.startsWith(`${route}/`));
-}
-
-function safeDestination(next: string | null) {
-  if (!next) return "/admin";
-  if (next === "/admin" || next.startsWith("/admin/")) return next;
-  if (next === "/artist" || next.startsWith("/artist/")) return next;
-  return "/admin";
+  return routes.some(
+    (route) => pathname === route || pathname.startsWith(`${route}/`),
+  );
 }
 
 function clearStaleSession(request: NextRequest, response: NextResponse) {
-  request.cookies.getAll()
+  request.cookies
+    .getAll()
     .filter(({ name }) => isSupabaseSessionCookie(name))
-    .forEach(({ name }) => response.cookies.set(name, "", { maxAge: 0, path: "/" }));
+    .forEach(({ name }) =>
+      response.cookies.set(name, "", { maxAge: 0, path: "/" }),
+    );
   return response;
 }
 
@@ -56,11 +70,15 @@ export async function middleware(request: NextRequest) {
   const isLogin = pathname === "/login";
   let response = NextResponse.next({ request });
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const publishableKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const publishableKey =
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ??
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
   if (!url || !publishableKey) {
     if (isProtected) {
-      return NextResponse.redirect(new URL("/login?configuration=required", request.url));
+      return NextResponse.redirect(
+        new URL("/login?configuration=required", request.url),
+      );
     }
     return response;
   }
@@ -71,14 +89,21 @@ export async function middleware(request: NextRequest) {
         return request.cookies.getAll();
       },
       setAll(cookiesToSet) {
-        cookiesToSet.forEach(({ name, value, options }) => request.cookies.set(name, value));
+        cookiesToSet.forEach(({ name, value, options }) =>
+          request.cookies.set(name, value),
+        );
         response = NextResponse.next({ request });
-        cookiesToSet.forEach(({ name, value, options }) => response.cookies.set(name, value, options));
+        cookiesToSet.forEach(({ name, value, options }) =>
+          response.cookies.set(name, value, options),
+        );
       },
     },
   });
 
-  const { data: { user }, error: authError } = await supabase.auth.getUser();
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
 
   if (isStaleAuthSession(authError)) {
     if (isProtected) {
@@ -95,20 +120,47 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(redirectUrl);
   }
 
+  let role: OdinRole | null = null;
+  if (user && (isLogin || isProtected)) {
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", user.id)
+      .maybeSingle<{ role: OdinRole }>();
+    role = profile?.role ?? null;
+  }
+
   if (user && isLogin) {
     const next = request.nextUrl.searchParams.get("next");
-    const destination = safeDestination(next);
+    const destination = memberDestinationForRole(role, next) ?? "/account";
     return NextResponse.redirect(new URL(destination, request.url));
   }
 
   if (user && isProtected) {
-    const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).maybeSingle();
-    const role = profile?.role;
+    if (!role) return NextResponse.redirect(new URL("/account", request.url));
 
-    if (role === "artist" && pathname.startsWith("/admin")) return NextResponse.redirect(new URL("/artist/dashboard", request.url));
-    if (matchesRoute(pathname, superAdminRoutes) && role !== "super_admin") return NextResponse.redirect(new URL("/admin/dashboard", request.url));
-    if (role === "booking_director" && matchesRoute(pathname, ["/admin/expenses"])) return NextResponse.redirect(new URL("/admin/money", request.url));
-    if (matchesRoute(pathname, bookingRoutes) && role === "artist") return NextResponse.redirect(new URL("/artist/dashboard", request.url));
+    const isFoundationPath = matchesRoute(pathname, ["/foundation"]);
+
+    if (role === "foundation_partner" && !isFoundationPath) {
+      return NextResponse.redirect(new URL("/foundation", request.url));
+    }
+
+    if (
+      isFoundationPath &&
+      role !== "foundation_partner" &&
+      role !== "super_admin"
+    ) {
+      return NextResponse.redirect(
+        new URL(memberHomeForRole(role) ?? "/account", request.url),
+      );
+    }
+
+    if (role === "artist" && pathname.startsWith("/admin"))
+      return NextResponse.redirect(new URL("/artist/dashboard", request.url));
+    if (matchesRoute(pathname, superAdminRoutes) && role !== "super_admin")
+      return NextResponse.redirect(new URL("/admin/dashboard", request.url));
+    if (matchesRoute(pathname, bookingRoutes) && role === "artist")
+      return NextResponse.redirect(new URL("/artist/dashboard", request.url));
   }
 
   return response;
@@ -119,6 +171,7 @@ export const config = {
     "/admin/:path*",
     "/artist/:path*",
     "/dashboard/:path*",
+    "/foundation/:path*",
     "/venues/:path*",
     "/leads/:path*",
     "/contracts/:path*",

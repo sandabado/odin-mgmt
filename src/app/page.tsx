@@ -1,35 +1,64 @@
-import Link from "next/link";
-import { OdinOrbitMark } from "@/components/OdinOrbitMark";
-import { BookingForm } from "@/components/BookingForm";
-import { CaliforniaCoastMap } from "@/components/CaliforniaCoastMap";
-import { OdinProcess } from "@/components/OdinProcess";
-import { PromotionCard } from "@/components/PromotionCard";
-import { RosterCard } from "@/components/RosterCard";
-import { SectionHeading } from "@/components/SectionHeading";
-import { artists, promotions, services } from "@/lib/site-data";
+import type { Metadata } from "next";
+import { RecordsFooter } from "@/components/whole-body-records/RecordsFooter";
+import { InkOnWaterPreview } from "@/components/whole-body-records/InkOnWaterPreview";
+import { sandabadoStoreCatalog } from "@/lib/commerce/catalog";
+import { buildRecordsLabelCurrent } from "@/lib/records-label-current";
+import { getPublicSiteData } from "@/lib/public-mirror";
 
-export default function HomePage() {
-  return <main>
-    <header className="site-header"><Link className="brand" href="/"><OdinOrbitMark className="brand-mark" decorative /><span>ØDIN<br />Management</span></Link><nav aria-label="Primary navigation"><a href="#roster">Roster</a><a href="#exchange">Exchange</a><a href="#work">Work</a><a href="#approach">Approach</a><a href="#contact">Contact</a></nav><Link className="header-link" href="/login">Enter ØDIN <span aria-hidden="true">→</span></Link></header>
+export const metadata: Metadata = {
+  title: "Whole Body Records — Many voices. One whole body.",
+  description:
+    "A self-sustaining creative economy for artists who own their work and fans who seek the source.",
+  applicationName: "Whole Body Records",
+  alternates: { canonical: "/" },
+};
 
-    <section className="hero"><div className="hero-backdrop" aria-hidden="true"><span className="light-beam light-beam--violet" /><span className="light-beam light-beam--amber" /><span className="light-beam light-beam--rose" /></div><div className="hero-grid"><div className="hero-copy"><p className="eyebrow">Artist management & booking</p><h1>Make the work.<br /><em>Keep moving.</em></h1><p className="hero-intro">ØDIN Management builds the rooms, relationships, and long-range infrastructure behind independent artists with something real to say.</p><div className="hero-actions"><a className="button button-primary" href="#contact">Bring us a room <span aria-hidden="true">→</span></a><a className="button button-quiet" href="#roster">Meet the roster</a></div></div><div className="hero-signal" aria-label="ØDIN Management live signal"><div className="signal-orbit signal-orbit-one" /><div className="signal-orbit signal-orbit-two" /><div className="signal-center signal-center--mark"><OdinOrbitMark className="hero-orbit-mark" decorative /></div><p>Now playing<br /><strong>Band room / take 01</strong></p></div></div><div className="hero-footer"><span><i className="live-dot" />Live from the band room</span><span>Powered by Whole Body Records · Los Angeles · Morongo Valley</span></div></section>
+export const revalidate = 30;
 
-    <section className="manifesto section-shell"><div className="manifesto-kicker"><span>01</span><p>ØDIN / independent by design</p></div><div className="manifesto-statement"><p className="eyebrow">A different kind of management</p><h2>We don&apos;t rent attention.<br /><em>We build a field.</em></h2></div><div className="manifesto-copy"><p>ØDIN exists for artists who intend to make a body of work—not merely pass through a release cycle. We manage the operational gravity: the outreach, terms, rooms, and follow-through that make creative momentum possible.</p><p>Technology can open a door. It cannot replace a relationship. Every meaningful conversation stays human.</p></div></section>
+export default async function HomePage() {
+  const {
+    artists,
+    editorial,
+    playableReleases,
+    products,
+    releases,
+    source,
+    tourDates,
+  } = await getPublicSiteData();
+  const artist =
+    artists.find((entry) => entry.slug === "sandabado") ?? artists[0];
+  const secondaryArtist = artists.find((entry) => entry.slug !== artist?.slug);
+  const release =
+    releases.find((entry) => entry.slug === "infinity-love") ?? releases[0];
+  const playableRelease =
+    playableReleases.find((entry) => entry.slug === "333") ??
+    playableReleases[0];
+  const labelCurrent = buildRecordsLabelCurrent({
+    editorial,
+    releases,
+    tourDates,
+  });
+  const artistProducts = products.length
+    ? products
+    : source === "curated-fallback"
+      ? [...sandabadoStoreCatalog]
+      : [];
 
-    <section id="exchange" className="exchange"><CaliforniaCoastMap /><div className="exchange-container"><SectionHeading eyebrow="The ØDIN exchange" title={<><span className="exchange-title-line">Don&apos;t just book a city.</span><br /><em>Trade a stage.</em></>}><p>ØDIN pairs artists across markets so every bill carries two audiences, two local advocates, and a reason for the next show to happen.</p></SectionHeading><div className="exchange-layout"><div className="exchange-copy"><div className="exchange-copy__header"><p className="eyebrow">The triangulation</p><p className="exchange-copy__meta">3 markets / 2-way shows</p></div><h3>Joshua Tree <span aria-hidden="true">↔</span><br />Los Angeles <span aria-hidden="true">↔</span><br />San Diego</h3><p>We bring an ØDIN artist into a partner&apos;s home market, then make the reciprocal desert show possible. Both artists cross-promote. Both venues get a fuller room. The relationship stays in the network.</p><ol aria-label="How the exchange works"><li><span>01</span><strong>Match</strong><small>A compatible bill</small></li><li><span>02</span><strong>Build</strong><small>The paired show offer</small></li><li><span>03</span><strong>Promote</strong><small>Across both markets</small></li></ol><a className="exchange-cta" href="mailto:artists@odin.management?subject=%C3%98DIN%20Exchange%20network">Join the exchange <span aria-hidden="true">→</span></a></div></div><div className="exchange-footnote"><span>Built with intent</span><p>ØDIN is building this pilot network deliberately: no extractive routing, no empty promises, and no automated close.</p></div></div></section>
-
-    <section id="roster" className="roster section-shell"><SectionHeading eyebrow="The roster" title={<>Artists with a <em>long view.</em></>}><p>Music, moving image, and fieldwork from artists building culture without giving away the center.</p></SectionHeading><div className="roster-grid">{artists.map((artist) => <RosterCard artist={artist} key={artist.name} />)}</div><div className="roster-note"><span className="live-dot" />Limited new artist conversations open through 2026. <a href="mailto:artists@odin.management">Introduce your work ↗</a></div></section>
-
-    <section id="work" className="work section-shell"><SectionHeading eyebrow="Promotion studio" title={<>We make the signal<br /><em>look like itself.</em></>}><p>Launch worlds, show posters, press moments, and release systems made to carry an artist&apos;s actual character into the room.</p></SectionHeading><div className="promotion-grid">{promotions.map((promotion) => <PromotionCard key={promotion.artist} promotion={promotion} />)}</div><div className="work-footer"><p>Every campaign is built from the work outward—never a borrowed template with a new name placed on top.</p><a className="text-link" href="mailto:artists@odin.management?subject=Promotion%20studio%20inquiry">See if we&apos;re a fit <span aria-hidden="true">→</span></a></div></section>
-
-    <section className="showcase"><div className="showcase-label"><p className="eyebrow">Next signal</p><p>26 Sep 2026</p></div><div><p className="eyebrow">Red Dog Saloon · Showcase</p><h2>Bring the record<br />into the <em>room.</em></h2></div><a className="text-link light" href="mailto:booking@odin.management?subject=Red%20Dog%20Saloon%20Showcase">Request details <span aria-hidden="true">↗</span></a></section>
-
-    <section id="approach" className="approach section-shell"><SectionHeading eyebrow="The ØDIN method" title={<>Tools should serve the <em>relationship.</em></>}><p>We pair thoughtful outreach systems with people who know how to listen, negotiate, and follow through.</p></SectionHeading><div className="approach-layout"><OdinProcess /><div className="operations-card"><p className="eyebrow">The management desk</p><div className="operations-line"><span>Venue intelligence</span><b>Active</b></div><div className="operations-line"><span>Artist press materials</span><b>Ready</b></div><div className="operations-line"><span>Outreach review</span><b>Human-led</b></div><div className="operations-line"><span>Contract & settlement</span><b>Protected</b></div><p className="operations-footer">ØDIN&apos;s private operating system is intentionally not public. Qualified partners receive the right level of access, at the right time.</p></div></div></section>
-
-    <section className="services section-shell"><SectionHeading eyebrow="What we hold" title={<>The work around<br />the <em>work.</em></>} /><div className="service-list">{services.map(([number, name, copy]) => <article key={number}><span>{number}</span><h3>{name}</h3><p>{copy}</p></article>)}</div></section>
-
-    <section id="contact" className="contact"><div className="contact-copy"><p className="eyebrow">Booking & management</p><h2>Let&apos;s make a<br /><em>true room.</em></h2><p>Bring us a date, a city, a strange idea, or the first thread of a longer conversation. We&apos;ll tell you plainly if there&apos;s a fit.</p><a className="text-link" href="mailto:booking@odin.management">booking@odin.management <span aria-hidden="true">↗</span></a><p className="contact-meta">ØDIN Management<br />Powered by Whole Body Records<br />(952) 212-1170</p></div><BookingForm /></section>
-
-    <footer className="site-footer"><Link className="brand" href="/"><OdinOrbitMark className="brand-mark" decorative /><span>ØDIN<br />Management</span></Link><div><p>Independent management infrastructure for independent artists.</p><p className="footer-fine">© 2026 ØDIN Management · Powered by Whole Body Records</p></div><div className="footer-links"><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link><a href="mailto:booking@odin.management">Email</a></div></footer>
-  </main>;
+  return (
+    <>
+      <InkOnWaterPreview
+        artist={artist}
+        artists={artists}
+        editorial={editorial}
+        heroSlides={labelCurrent}
+        playableRelease={playableRelease}
+        products={artistProducts}
+        release={release}
+        releases={releases}
+        secondaryArtist={secondaryArtist}
+        tourDates={tourDates}
+      />
+      <RecordsFooter />
+    </>
+  );
 }

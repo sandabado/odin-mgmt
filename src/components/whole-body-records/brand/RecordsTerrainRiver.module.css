@@ -1,0 +1,88 @@
+.field {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  filter: contrast(1.03);
+  transform: translate3d(
+      calc(var(--mountain-shift-x, 0px) * -0.28),
+      calc(var(--mountain-shift-y, 0px) * -0.28),
+      0
+    )
+    scale(1.035);
+  transition:
+    transform 1.4s cubic-bezier(0.25, 0.1, 0.25, 1),
+    filter 1.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+  will-change: transform;
+}
+
+.painting {
+  z-index: 0;
+  object-fit: cover;
+  object-position: center;
+}
+
+.overlay {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.wash,
+.signal {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.wash {
+  opacity: 0.72;
+  filter: drop-shadow(0 0 2px rgba(45, 156, 219, 0.18));
+  mix-blend-mode: color;
+}
+
+.signal {
+  stroke: rgba(45, 156, 219, 0.82);
+  stroke-dasharray: 0.012 0.052;
+  stroke-dashoffset: 0;
+  opacity: 0.36;
+  filter: drop-shadow(0 0 1px rgba(45, 156, 219, 0.18));
+  mix-blend-mode: screen;
+  animation: terrain-current 4.8s linear infinite;
+  transition:
+    opacity 1.4s cubic-bezier(0.25, 0.1, 0.25, 1),
+    filter 1.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.field[data-active="true"] .wash {
+  opacity: 0.95;
+}
+
+.field[data-active="true"] .signal {
+  opacity: 0.72;
+  filter: drop-shadow(0 0 3px rgba(45, 156, 219, 0.4));
+  animation-duration: 2.4s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .field {
+    transform: none;
+    transition: none;
+  }
+
+  .signal {
+    animation: none;
+    stroke-dasharray: none;
+    opacity: 0.3;
+  }
+}
+
+@keyframes terrain-current {
+  to {
+    stroke-dashoffset: -0.064;
+  }
+}

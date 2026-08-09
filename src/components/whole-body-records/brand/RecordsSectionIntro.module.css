@@ -1,0 +1,98 @@
+.intro {
+  display: grid;
+  width: 100%;
+  max-width: 1120px;
+  gap: 25px;
+}
+
+.intro[data-layout="split"] {
+  max-width: none;
+  grid-template-columns: minmax(140px, 0.28fr) minmax(0, 1fr);
+  gap: clamp(42px, 8vw, 110px);
+  align-items: start;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--records-section-water, #2d9cdb);
+  font-family: var(--font-records-body), "Schibsted Grotesk", Arial, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.statement {
+  min-width: 0;
+}
+
+.title {
+  max-width: 15ch;
+  margin: 0;
+  color: inherit;
+  font-family: var(--font-records-display), "Fraunces", Georgia, serif;
+  font-optical-sizing: auto;
+  font-weight: 650;
+  letter-spacing: -0.045em;
+  line-height: 0.94;
+  text-wrap: balance;
+}
+
+.intro[data-size="compact"] .title {
+  font-size: clamp(2rem, 4vw, 3.4rem);
+}
+
+.intro[data-size="section"] .title {
+  font-size: clamp(2.8rem, 6vw, 5.8rem);
+}
+
+.intro[data-size="display"] .title {
+  max-width: 12ch;
+  font-size: clamp(3.6rem, 8vw, 7.5rem);
+  line-height: 0.9;
+}
+
+.emphasis {
+  color: var(--records-section-muted, #aaa69f);
+  font: inherit;
+  font-style: italic;
+}
+
+.emphasis[data-placement="block"] {
+  display: block;
+}
+
+.emphasis[data-tone="water"] {
+  color: var(--records-section-water, #2d9cdb);
+  font-style: normal;
+}
+
+.copy {
+  max-width: 62ch;
+  margin-top: 25px;
+  color: var(--records-section-muted, #aaa69f);
+  font-family: var(--font-records-body), "Schibsted Grotesk", Arial, sans-serif;
+  font-size: clamp(1rem, 1.35vw, 1.18rem);
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+.copy > :first-child {
+  margin-top: 0;
+}
+
+.copy > :last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 720px) {
+  .intro[data-layout="split"] {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .intro[data-size="display"] .title {
+    font-size: clamp(3.2rem, 14vw, 5rem);
+  }
+}

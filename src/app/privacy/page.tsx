@@ -1,3 +1,40 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+import { RecordsPageShell } from "@/components/whole-body-records/RecordsPageShell";
 
-export default function PrivacyPage() { return <main className="legal-page"><Link href="/" className="brand"><span className="brand-mark">Ø</span><span>ØDIN<br />Management</span></Link><p className="eyebrow">Privacy</p><h1>We protect the signal.</h1><p>ØDIN Management uses contact details only to respond to legitimate booking and management inquiries. We do not sell personal information or use it for unrelated marketing.</p><p>For questions or data requests, contact <a href="mailto:booking@odin.management">booking@odin.management</a>.</p><Link href="/" className="text-link">Return home <span aria-hidden="true">→</span></Link></main>; }
+export const metadata: Metadata = {
+  title: "Privacy — Whole Body Records",
+  description:
+    "How Whole Body Records handles artist submissions and personal information.",
+  alternates: { canonical: "/privacy" },
+};
+
+export default function PrivacyPage() {
+  return (
+    <RecordsPageShell route="legal" variant="legal">
+      <p className="records-kicker">Privacy</p>
+      <h1>We protect the work and the people behind it.</h1>
+      <p>
+        Whole Body Records uses submission details only to review the work,
+        respond to the sender, and maintain the resulting conversation. We do
+        not sell personal information or use artist submissions for unrelated
+        marketing.
+      </p>
+      <p>
+        Submission records are available only to authorized ØDIN operations
+        users. Sending work does not grant Whole Body Records ownership,
+        publishing, licensing, or other rights in that work.
+      </p>
+      <p>
+        For access, correction, deletion, or privacy questions, contact{" "}
+        <a href="mailto:booking@odin.management?subject=Whole%20Body%20Records%20privacy">
+          booking@odin.management
+        </a>
+        .
+      </p>
+      <Link className="records-catalog-link" href="/">
+        Return home <span aria-hidden="true">→</span>
+      </Link>
+    </RecordsPageShell>
+  );
+}

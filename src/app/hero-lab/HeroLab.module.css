@@ -1,0 +1,545 @@
+.lab {
+  --black: #0a0a09;
+  --black-soft: #151514;
+  --bone: #f5f2eb;
+  --gray: #aaa69f;
+  --gray-deep: #817e78;
+  --blue: #2d9cdb;
+  --line: rgba(245, 242, 235, 0.22);
+  --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  background: var(--black);
+  color: var(--bone);
+  font-family: var(--font-records-body), "Schibsted Grotesk", sans-serif;
+  isolation: isolate;
+}
+
+.lab *,
+.lab *::before,
+.lab *::after {
+  box-sizing: border-box;
+}
+
+.lab a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.skipLink {
+  position: fixed;
+  z-index: 30;
+  top: 8px;
+  left: 8px;
+  border: 1px solid var(--bone);
+  padding: 12px 16px;
+  background: var(--black);
+  color: var(--bone);
+  font-size: 0.75rem;
+  transform: translateY(-150%);
+  transition: transform 500ms var(--ease);
+}
+
+.skipLink:focus {
+  transform: translateY(0);
+}
+
+.labHeader {
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  min-height: 76px;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+  padding: 16px clamp(20px, 4vw, 64px);
+  background: rgba(10, 10, 9, 0.78);
+  backdrop-filter: blur(18px);
+}
+
+.labHeader p {
+  margin: 0;
+  color: var(--gray);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.wordmark {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 13px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.mark {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+}
+
+.flowMark {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.flowMark :global(.records-flow-mark__field) {
+  fill: var(--black);
+}
+
+.flowMark :global(.records-flow-mark__current--one),
+.flowMark :global(.records-flow-mark__dot--two) {
+  fill: var(--blue);
+}
+
+.flowMark :global(.records-flow-mark__current--two),
+.flowMark :global(.records-flow-mark__dot--one) {
+  fill: var(--bone);
+}
+
+.flowMark :global(.records-flow-mark__ring) {
+  stroke: rgba(245, 242, 235, 0.66);
+}
+
+.stage {
+  position: relative;
+  display: grid;
+  min-height: 100svh;
+  overflow: hidden;
+  grid-template-columns: minmax(0, 1fr) minmax(250px, 28vw);
+  outline: none;
+  padding: 112px clamp(22px, 6vw, 96px) 160px;
+}
+
+.stage:focus-visible {
+  box-shadow: inset 0 0 0 1px var(--bone);
+}
+
+.imageField,
+.depthWash {
+  position: absolute;
+  inset: 0;
+}
+
+.imageField {
+  z-index: -3;
+  background-image: var(--hero-image);
+  background-position: center;
+  background-size: cover;
+  filter: contrast(1.04) brightness(0.76);
+  opacity: 0;
+  transform: scale(1.025);
+  transition:
+    opacity 900ms var(--ease),
+    transform 7s var(--ease);
+}
+
+.imageFieldActive {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.depthWash {
+  z-index: -2;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(10, 10, 9, 0.97) 0%,
+      rgba(10, 10, 9, 0.78) 39%,
+      rgba(10, 10, 9, 0.22) 68%,
+      rgba(10, 10, 9, 0.72) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(10, 10, 9, 0.56) 0%,
+      rgba(10, 10, 9, 0.02) 42%,
+      rgba(10, 10, 9, 0.86) 100%
+    );
+}
+
+.heroCopy {
+  align-self: center;
+  width: min(760px, 70vw);
+  padding-top: 10px;
+}
+
+.eyebrow {
+  margin: 0 0 24px;
+  color: var(--gray);
+  font-size: 0.67rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.heroCopy h1 {
+  max-width: 790px;
+  margin: 0;
+  font-family: var(--font-records-display), Fraunces, serif;
+  font-size: clamp(4rem, 8.4vw, 9.5rem);
+  font-optical-sizing: auto;
+  font-weight: 650;
+  letter-spacing: -0.055em;
+  line-height: 0.84;
+  text-wrap: balance;
+}
+
+.subhead {
+  max-width: 570px;
+  margin: 42px 0 0;
+  border-left: 1px solid var(--blue);
+  padding-left: 22px;
+  color: var(--bone);
+  font-size: clamp(1rem, 1.3vw, 1.2rem);
+  line-height: 1.72;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 28px;
+  margin-top: 34px;
+}
+
+.actions a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  color: var(--gray);
+  font-size: 0.73rem;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  transition:
+    border-color 480ms var(--ease),
+    color 480ms var(--ease);
+}
+
+.actions a:hover,
+.actions a:focus-visible {
+  border-color: var(--blue);
+  color: var(--bone);
+}
+
+.actions .primaryAction {
+  border: 1px solid var(--blue);
+  padding: 0 18px;
+  color: var(--bone);
+}
+
+.actions .primaryAction:hover,
+.actions .primaryAction:focus-visible {
+  background: var(--blue);
+  color: var(--black);
+}
+
+.conceptNote {
+  align-self: end;
+  border-top: 1px solid var(--blue);
+  padding-top: 18px;
+}
+
+.conceptNote > span {
+  color: var(--blue);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+}
+
+.conceptNote h2 {
+  margin: 14px 0 12px;
+  font-family: var(--font-records-display), Fraunces, serif;
+  font-size: clamp(1.5rem, 2.25vw, 2.5rem);
+  font-optical-sizing: auto;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+
+.conceptNote p {
+  max-width: 350px;
+  margin: 0;
+  color: var(--gray);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.picker {
+  position: fixed;
+  z-index: 20;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: grid;
+  grid-template-columns: minmax(130px, 0.7fr) 5fr;
+  border-top: 1px solid var(--line);
+  background: rgba(10, 10, 9, 0.9);
+  backdrop-filter: blur(20px);
+}
+
+.picker > p {
+  display: flex;
+  min-height: 104px;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0;
+  border-right: 1px solid var(--line);
+  padding: 16px clamp(20px, 3vw, 46px);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  line-height: 1.55;
+  text-transform: uppercase;
+}
+
+.picker > p small {
+  color: var(--gray-deep);
+  font-size: 0.6rem;
+  font-weight: 500;
+}
+
+.pickerOptions {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.pickerOption {
+  display: flex;
+  min-width: 0;
+  min-height: 104px;
+  align-items: flex-start;
+  gap: 12px;
+  border: 0;
+  border-right: 1px solid var(--line);
+  padding: 22px clamp(12px, 1.6vw, 26px);
+  background: transparent;
+  color: var(--gray);
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  transition:
+    background 480ms var(--ease),
+    color 480ms var(--ease);
+}
+
+.pickerOption:last-child {
+  border-right: 0;
+}
+
+.pickerOption > span {
+  color: var(--gray-deep);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.pickerOption strong {
+  overflow: hidden;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  line-height: 1.45;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+}
+
+.pickerOption:hover,
+.pickerOption:focus-visible {
+  background: rgba(245, 242, 235, 0.05);
+  color: var(--bone);
+  outline: none;
+}
+
+.pickerOption[aria-selected="true"] {
+  box-shadow: inset 0 3px 0 var(--blue);
+  color: var(--bone);
+}
+
+.pickerOption[aria-selected="true"] > span {
+  color: var(--blue);
+}
+
+@media (max-width: 900px) {
+  .stage {
+    display: flex;
+    min-height: 100svh;
+    flex-direction: column;
+    justify-content: center;
+    padding: 106px 24px 190px;
+  }
+
+  .heroCopy {
+    width: min(100%, 660px);
+  }
+
+  .heroCopy h1 {
+    font-size: clamp(3.5rem, 14vw, 6.5rem);
+  }
+
+  .conceptNote {
+    width: min(100%, 510px);
+    margin-top: 36px;
+    align-self: flex-start;
+  }
+
+  .picker {
+    grid-template-columns: 1fr;
+  }
+
+  .picker > p {
+    display: none;
+  }
+
+  .pickerOption {
+    min-height: 72px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+    padding: 10px 12px;
+  }
+
+  .pickerOption strong {
+    max-width: 100%;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 640px) {
+  .labHeader {
+    min-height: 64px;
+    padding: 10px 16px;
+  }
+
+  .labHeader p {
+    display: none;
+  }
+
+  .wordmark {
+    font-size: 0.65rem;
+  }
+
+  .mark {
+    width: 32px;
+    height: 32px;
+  }
+
+  .stage {
+    min-height: max(100svh, 770px);
+    justify-content: flex-start;
+    padding: 104px 20px 124px;
+  }
+
+  .depthWash {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(10, 10, 9, 0.78) 0%,
+        rgba(10, 10, 9, 0.42) 38%,
+        rgba(10, 10, 9, 0.95) 100%
+      ),
+      linear-gradient(
+        90deg,
+        rgba(10, 10, 9, 0.68) 0%,
+        rgba(10, 10, 9, 0.06) 100%
+      );
+  }
+
+  .heroCopy h1 {
+    max-width: 520px;
+    font-size: clamp(3.35rem, 17vw, 5.2rem);
+    line-height: 0.87;
+  }
+
+  .eyebrow {
+    margin-bottom: 18px;
+  }
+
+  .subhead {
+    margin-top: 30px;
+    padding-left: 16px;
+    font-size: 0.98rem;
+    line-height: 1.62;
+  }
+
+  .actions {
+    align-items: stretch;
+    gap: 4px 18px;
+    margin-top: 22px;
+  }
+
+  .actions a {
+    min-height: 42px;
+    font-size: 0.65rem;
+  }
+
+  .actions .primaryAction {
+    width: 100%;
+    min-height: 46px;
+    justify-content: center;
+  }
+
+  .conceptNote {
+    margin-top: 24px;
+    padding-top: 12px;
+  }
+
+  .conceptNote h2 {
+    margin: 9px 0 7px;
+    font-size: 1.4rem;
+  }
+
+  .conceptNote p {
+    font-size: 0.78rem;
+    line-height: 1.48;
+  }
+
+  .picker {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .picker::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pickerOptions {
+    width: max-content;
+    min-width: 100%;
+    grid-template-columns: repeat(5, minmax(64px, 1fr));
+  }
+
+  .pickerOption {
+    width: min(20vw, 92px);
+    min-width: 64px;
+    min-height: 72px;
+    align-items: center;
+  }
+
+  .pickerOption strong {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .imageField,
+  .pickerOption,
+  .actions a,
+  .skipLink {
+    transition-duration: 1ms;
+  }
+}

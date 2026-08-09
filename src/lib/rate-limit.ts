@@ -1,8 +1,7 @@
 type RateLimitOptions = { limit: number; windowMs: number };
 type RateLimitResult = { allowed: boolean; remaining: number; retryAfterSeconds: number };
-type Bucket = { count: number; resetAt: number };
 
-const buckets = new Map<string, Bucket>();
+const buckets = new Map<string, number[]>();
 
 /**
  * Development-safe in-memory limiter. It intentionally has no cross-instance
@@ -10,16 +9,15 @@ const buckets = new Map<string, Bucket>();
  */
 export function checkRateLimit(key: string, { limit, windowMs }: RateLimitOptions): RateLimitResult {
   const now = Date.now();
-  const existing = buckets.get(key);
-  const bucket = !existing || existing.resetAt <= now ? { count: 0, resetAt: now + windowMs } : existing;
-
-  bucket.count += 1;
-  buckets.set(key, bucket);
-
-  const allowed = bucket.count <= limit;
+  const cutoff = now - windowMs;
+  const timestamps = (buckets.get(key) ?? []).filter((timestamp) => timestamp > cutoff);
+  timestamps.push(now);
+  buckets.set(key, timestamps);
+  const allowed = timestamps.length <= limit;
+  const oldestCounted = timestamps[0] ?? now;
   return {
     allowed,
-    remaining: Math.max(0, limit - bucket.count),
-    retryAfterSeconds: Math.max(1, Math.ceil((bucket.resetAt - now) / 1_000)),
+    remaining: Math.max(0, limit - timestamps.length),
+    retryAfterSeconds: Math.max(1, Math.ceil((oldestCounted + windowMs - now) / 1_000)),
   };
 }
